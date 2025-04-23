@@ -3,7 +3,7 @@ TEMP_DIR = temp
 
 all:
 	mkdir -p $(TEMP_DIR)
-	pdflatex -output-directory=$(TEMP_DIR) $(TARGET).tex
+	xelatex -output-directory=$(TEMP_DIR) $(TARGET).tex
 	mv $(TEMP_DIR)/$(TARGET).pdf ./
 
 clean:
