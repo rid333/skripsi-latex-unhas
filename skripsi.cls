@@ -42,10 +42,11 @@
 \fancyhead[R]{\thepage}
 \renewcommand{\headrulewidth}{0pt}
 
+% Fix report from replacing fancyhdr
 \fancypagestyle{plain}{%
-  \fancyhf{} % Clear header/footer for the 'plain' style too
-  \fancyhead[R]{\thepage} % Set the right header for the 'plain' style
-  \renewcommand{\headrulewidth}{0pt} % No header rule for 'plain' style
+  \fancyhf{} 
+  \fancyhead[R]{\thepage} 
+  \renewcommand{\headrulewidth}{0pt}
 }
 
 % Line space and indent
@@ -62,8 +63,8 @@
   {0pt}
   {\bfseries\centering\fontsize{11pt}{13pt}\selectfont\MakeUppercase}
 \titlespacing{\chapter}
-    {0pt}        % No indentation
-    {*0}         % No space before the section title
+    {0pt}
+    {*0}
     {1.15\baselineskip}
 
 \titleformat{\section}
