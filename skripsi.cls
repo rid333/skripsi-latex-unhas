@@ -1,10 +1,11 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{skripsi}[2025/04/23 Original Author: Ridho]
 
-\LoadClass[11pt, b5paper]{report}
+\LoadClass[10pt, b5paper]{report}
 
 % Required package
 % Indent first paragraph
+\RequirePackage{titlesec}
 \RequirePackage{indentfirst}
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
@@ -32,9 +33,6 @@
   bottom=2.25cm,
   left=2.25cm,
   right=2.25cm,
-  headheight=15pt,
-  headsep=0.7cm,
-  includehead
 }
 
 % Page num
@@ -43,4 +41,16 @@
 \fancyhead[R]{\thepage}
 \renewcommand{\headrulewidth}{0pt}
 
+% Line space and indent
+\setstretch{1.15}
+\setlength{\parindent}{1cm}
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+\sloppy
 
+% Redefine chapter, section, etc
+\titleformat{\chapter}[display]
+  {\bfseries\fontsize{11pt}{13pt}\selectfont\centering}  % 11pt, bold, center
+  {BAB \thechapter}       % bisa disesuaikan: "Chapter" atau "BAB"
+  {1em}                   % jarak antar nomor dan judul
+  {\centering}  
