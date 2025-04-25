@@ -50,7 +50,9 @@
 
 % Redefine chapter, section, etc
 \titleformat{\chapter}[display]
-  {\bfseries\fontsize{11pt}{13pt}\selectfont\centering}  % 11pt, bold, center
-  {BAB \thechapter}       % bisa disesuaikan: "Chapter" atau "BAB"
-  {1em}                   % jarak antar nomor dan judul
-  {\centering}  
+  {\bfseries\centering\fontsize{11pt}{13pt}\selectfont}
+  {BAB\ \thechapter}
+  {0pt}
+  {\bfseries\centering\fontsize{11pt}{13pt}\selectfont\MakeUppercase}
+
+\titlespacing*{\chapter}{0pt}{*0}{*1.15}
