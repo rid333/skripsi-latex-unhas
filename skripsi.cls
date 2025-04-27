@@ -4,6 +4,7 @@
 \LoadClass[10pt, b5paper]{report}
 
 % Required package
+\RequirePackage{enumitem}
 % Indent first paragraph
 \RequirePackage[compact]{titlesec}
 \RequirePackage{indentfirst}
@@ -56,7 +57,8 @@
 \exhyphenpenalty=10000
 \sloppy
 
-% Redefine chapter, section, etc
+% Redefine 
+% Chapter
 \titleformat{\chapter}[display]
   {\vspace*{-15pt}\bfseries\centering\fontsize{11pt}{13pt}\selectfont}
   {BAB\ \thechapter}
@@ -66,7 +68,7 @@
     {0pt}
     {*0}
     {1.15\baselineskip}
-
+% Section
 \titleformat{\section}
   {\bfseries\fontsize{10pt}{13pt}\selectfont}
   {\thesection}
@@ -76,3 +78,9 @@
     {0pt}        % No indentation
     {*0}         % No space before the section title
     {*0}         % No space after the section title
+% List
+\setlist[enumerate]{
+    noitemsep,
+    nolistsep,
+    leftmargin=*
+}
