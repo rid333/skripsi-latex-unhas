@@ -3,27 +3,44 @@
 
 \LoadClass[10pt, b5paper]{report}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Required package
+
+% Customizing list
 \RequirePackage{enumitem}
-% Indent first paragraph
+
+% Compact title
 \RequirePackage[compact]{titlesec}
+
+% Indent first paragraph
+
+% Optimize
 \RequirePackage{indentfirst}
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
+
 % Image
 \RequirePackage{graphicx}
+
 % Math related
 \RequirePackage{amsmath, amssymb}
+
 % Margin
 \RequirePackage{geometry}
+
 % Line spacing
 \RequirePackage{setspace}
+
 % Title
 \RequirePackage{titlesec}
+
 % Page num
 \RequirePackage{fancyhdr}
+
 % Clickable links
 \RequirePackage{hyperref}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % Arial font
 \RequirePackage{fontspec}
 \setmainfont{Arial}
@@ -57,6 +74,7 @@
 \exhyphenpenalty=10000
 \sloppy
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Redefine 
 % Chapter
 \titleformat{\chapter}[display]
@@ -84,3 +102,4 @@
     nolistsep,
     leftmargin=*
 }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
