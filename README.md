@@ -1,6 +1,6 @@
 ## Template Skripsi LaTex Universitas Hasanuddin
 
-Template skripsi menggunakan LaTex, Departemen Fisika, Fakultas MIPA, Universitas Hasanuddin.
+Template skripsi menggunakan LaTex, Departemen Fisika (Lab Instrumentasi), Fakultas MIPA, Universitas Hasanuddin.
 
 ```bash
 # Clone repo
