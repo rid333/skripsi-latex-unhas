@@ -1,0 +1,64 @@
+\newgeometry{top=22.5mm, bottom=22.5mm}
+\definecolor{sampul}{HTML}{c80404}
+\begin{titlepage}
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[sampul] (current page.south west) rectangle (current page.north east);
+  \end{tikzpicture}
+
+  \color{black}
+
+  \vspace*{-0.7cm}
+
+  \begin{center}
+    \textbf{JUDUL BAHASA INDONESIA}
+  \end{center}
+
+  \vfill
+  % Hexagon
+  \begin{center}
+    \begin{tikzpicture}[scale=1]
+      \foreach \i/\x/\y in {
+        1/3/3.2,
+        2/7.8/3.2,
+        3/0.6/4.6,
+        4/5.4/4.6,
+        5/3/6,
+        6/5.4/7.4
+      } {
+        \begin{scope}[shift={(\x,\y)}]
+          \clip (0:1.5) \foreach \a in {60,120,...,360} { -- (\a:1.5) };
+          \node at (0,0) {\includegraphics[width=4cm]{gambar/img\i.jpg}};
+          \draw[white, line width=1.5pt] (0:1.5) \foreach \a in
+          {60,120,...,360} { -- (\a:1.5) } -- cycle;
+        \end{scope}
+      }
+    \end{tikzpicture}
+  \end{center}
+
+  \vfill
+
+  \begin{center}
+    \textbf{ALRIDHO} \\
+    \textbf{H021211006} \\[1cm]
+  \end{center}
+
+  \vfill
+
+  \begin{minipage}{0.2\textwidth}
+    \hspace*{-1cm}
+    \includegraphics[width=2.5cm]{gambar/uh-b.png}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.75\textwidth}
+    \centering
+    \textbf{PROGRAM STUDI FISIKA} \\
+    \textbf{FAKULTAS MATEMATIKA DAN ILMU PENGETAHUAN ALAM} \\
+    \textbf{UNIVERSITAS HASANUDDIN} \\
+    \textbf{MAKASSAR} \\
+    \textbf{2025}
+  \end{minipage}
+
+  \vspace*{0.5cm}
+
+\end{titlepage}
+\restoregeometry

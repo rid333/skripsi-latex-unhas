@@ -8,6 +8,7 @@
 
 % Customizing list
 \RequirePackage{enumitem}
+\RequirePackage{tikz}
 
 % Compact title
 \RequirePackage[compact]{titlesec}
@@ -21,6 +22,7 @@
 
 % Image
 \RequirePackage{graphicx}
+\RequirePackage{xcolor}
 
 % Math related
 \RequirePackage{amsmath, amssymb}
@@ -47,11 +49,11 @@
 
 % Margin
 \geometry{
-    top=2.25cm,
-    bottom=2.25cm,
-    left=2.25cm,
-    right=2.25cm,
-    showframe
+  top=2.25cm,
+  bottom=2.25cm,
+  left=2.25cm,
+  right=2.25cm,
+  showframe
 }
 
 % Page num
@@ -62,8 +64,8 @@
 
 % Fix report from replacing fancyhdr
 \fancypagestyle{plain}{%
-  \fancyhf{} 
-  \fancyhead[R]{\thepage} 
+  \fancyhf{}
+  \fancyhead[R]{\thepage}
   \renewcommand{\headrulewidth}{0pt}
 }
 
@@ -75,31 +77,31 @@
 \sloppy
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Redefine 
+% Redefine
 % Chapter
 \titleformat{\chapter}[display]
-  {\vspace*{-15pt}\bfseries\centering\fontsize{11pt}{13pt}\selectfont}
-  {BAB\ \thechapter}
-  {0pt}
-  {\bfseries\centering\fontsize{11pt}{13pt}\selectfont\MakeUppercase}
+{\vspace*{-15pt}\bfseries\centering\fontsize{11pt}{13pt}\selectfont}
+{BAB\ \thechapter}
+{0pt}
+{\bfseries\centering\fontsize{11pt}{13pt}\selectfont\MakeUppercase}
 \titlespacing{\chapter}
-    {0pt}
-    {*0}
-    {1.15\baselineskip}
+{0pt}
+{*0}
+{1.15\baselineskip}
 % Section
 \titleformat{\section}
-  {\bfseries\fontsize{10pt}{13pt}\selectfont}
-  {\thesection}
-  {1em}
-  {}
+{\bfseries\fontsize{10pt}{13pt}\selectfont}
+{\thesection}
+{1em}
+{}
 \titlespacing{\section}
-    {0pt}        % No indentation
-    {*0}         % No space before the section title
-    {*0}         % No space after the section title
+{0pt}        % No indentation
+{*0}         % No space before the section title
+{*0}         % No space after the section title
 % List
 \setlist[enumerate]{
-    noitemsep,
-    nolistsep,
-    leftmargin=*
+  noitemsep,
+  nolistsep,
+  leftmargin=*
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
