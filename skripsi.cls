@@ -89,7 +89,8 @@
   }
 }
 \makeatother
-
+\renewcommand{\cftchapfont}{\normalfont}
+\renewcommand{\cftchappagefont}{\normalfont}
 \renewcommand{\cftchappresnum}{BAB }
 % Space between BAB [num] and text
 \setlength{\cftchapnumwidth}{3.8em}
@@ -106,7 +107,7 @@
 
 % BIB
 \renewcommand{\bibname}{Daftar Pustaka}
-\setlength{\bibhang}{2em} % sets hanging indent
+\setlength{\bibhang}{2em}
 
 % Page num
 \pagestyle{fancy}
