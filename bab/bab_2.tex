@@ -1,14 +1,38 @@
 \chapter{Metode Penelitian}
 \section{Tempat dan Waktu Penelitian}
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce malesuada non dui quis condimentum. Etiam dapibus ligula sapien, sed malesuada nisi lacinia finibus. Maecenas pulvinar mauris quis lorem vehicula porttitor. Vestibulum in eleifend tortor. Morbi hendrerit diam dui, mattis egestas elit mollis eu. Phasellus a venenatis elit, a euismod lacus.\\
+Penelitian ini dilaksanakan mulai dari bulan Februari 2025 hingga Juni
+2025, bertempat di Laboratorium Elektronika dan Instrumentasi,
+Departemen Fisika, Fakultas Matematika dan Ilmu Pengetahuan Alam,
+Universitas Hasanuddin, Makassar. \\
 
 \section{Peralatan Penelitian}
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce malesuada non dui quis condimentum. Etiam dapibus ligula sapien:
-    \begin{enumerate}
-        \item Items are numbered automatically.
-        \item The numbers start at 1 with each use of the \texttt{enumerate} environment.
-        \item Another entry in the list.
-    \end{enumerate} 
+Adapun peralatan yang digunakan pada penelitian ini adalah sebagai berikut
+\begin{enumerate}
+  \item Arduino Uno berf ungsi sebagai mikrokontroler utama yang
+    mengendalikan motor servo pada lengan robot serta menerima sinyal
+    dari sensor.
+  \item Motor Servo digunakan sebagai aktuator untuk menggerakkan
+    bagian-bagian lengan robot sesuai perintah dari Arduino.
+  \item Lengan Robot EEZYbotARM MK1 berfungsi sebagai struktur
+    mekanik yang menjadi tempat pemasangan motor servo dan berperan
+    sebagai sistem pergerakan robotik.
+  \item Power Supply 5V berf ungsi memberikan catu daya stabil untuk
+    motor servo agar dapat beroperasi dengan baik.
+  \item Sensor PIR HC-SR501 mendeteksi gerakan dan membantu
+    menghitung jumlah kontainer cacat dan non-cacat yang lewat.
+  \item Kamera digunakan untuk mengambil gambar kontainer kimia, yang
+    kemudian diproses oleh model deteksi (YOLO) dan deteksi cacat (Autoencoder).
+  \item Laptop/Komputer digunakan untuk mengunggah program ke Arduino
+    Uno, serta menjalankan model deteksi berbasis YOLO dan
+    Autoencoder untuk analisis visual.
+  \item Kabel Jumper berfungsi menghubungkan berbagai komponen
+    elektronik seperti sensor dan aktuator ke papan rangkaian dan
+    Arduino.Kabel Jumper berfungs imenghubungkan setiap komponen sensor.
+  \item Papan rangkaian berfungsi untuk menyediakan jalur koneksi
+    antar komponen. \\
+\end{enumerate}
 
-\section{}
-
+\section{Metode Kerja}
+Dalam penelitian ini terdapat beberapa tahapan yang harus dilakukan,
+tahapan penelitian dapat dilihat pada flowchart Gambar 1. Penelitian
+ini dibatasi pada perancangan dan pembuatan prototipe sistem deteksi cacat.
