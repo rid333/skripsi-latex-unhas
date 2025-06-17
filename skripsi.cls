@@ -6,14 +6,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Required package
 
+\RequirePackage{lipsum}
+\RequirePackage{etoolbox}
+\RequirePackage{tocloft}
+
 % Customizing list
 \RequirePackage{enumitem}
 \RequirePackage{tikz}
 
 % Compact title
 \RequirePackage[compact]{titlesec}
-
-% Indent first paragraph
 
 % Optimize
 \RequirePackage{indentfirst}
@@ -23,6 +25,7 @@
 % Image
 \RequirePackage{graphicx}
 \RequirePackage{xcolor}
+\RequirePackage{background}
 
 % Math related
 \RequirePackage{amsmath, amssymb}
@@ -55,6 +58,44 @@
   right=2.25cm,
   showframe
 }
+
+\backgroundsetup{
+  scale=1,
+  angle=0,
+  opacity=0.1,
+  position=current page.center,
+  contents={}
+}
+% --- TOC & Chapter Formatting ---
+\renewcommand\contentsname{\vspace*{-3cm}}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+
+\makeatletter
+\renewcommand{\@chapapp}{BAB}
+\renewcommand{\chaptername}{BAB}
+\renewcommand{\@makechapterhead}[1]{%
+  \vspace*{-15pt}%
+  {\parindent \z@ \centering
+    \normalfont\bfseries\fontsize{11pt}{13pt}\selectfont
+    \MakeUppercase{BAB\ \thechapter}%
+    \par\nobreak
+    \vskip 5pt
+    \normalfont\bfseries\fontsize{11pt}{13pt}\selectfont
+    \MakeUppercase{#1}\par\nobreak
+    \vskip 20pt
+  }
+}
+\makeatother
+
+\renewcommand{\cftchappresnum}{BAB }
+% Space between BAB [num] and text
+\setlength{\cftchapnumwidth}{3.8em}
+\setlength{\cftbeforechapskip}{0pt}
+
+% Line Spacing in TOC
+\usepackage{etoolbox}
+\pretocmd{\tableofcontents}{\begingroup\setstretch{1}}{}{}
+\apptocmd{\tableofcontents}{\endgroup}{}{}
 
 % Page num
 \pagestyle{fancy}
