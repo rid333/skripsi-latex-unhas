@@ -9,6 +9,9 @@
 \RequirePackage{lipsum}
 \RequirePackage{etoolbox}
 \RequirePackage{tocloft}
+\RequirePackage{float}
+\RequirePackage[labelfont=bf, labelsep=period]{caption}
+\RequirePackage[round]{natbib}
 
 % Customizing list
 \RequirePackage{enumitem}
@@ -97,6 +100,14 @@
 \pretocmd{\tableofcontents}{\begingroup\setstretch{1}}{}{}
 \apptocmd{\tableofcontents}{\endgroup}{}{}
 
+% Gambar captio
+\renewcommand{\figurename}{Gambar}
+\renewcommand{\thefigure}{\arabic{figure}}
+
+% BIB
+\renewcommand{\bibname}{Daftar Pustaka}
+\setlength{\bibhang}{2em} % sets hanging indent
+
 % Page num
 \pagestyle{fancy}
 \fancyhf{}
@@ -139,6 +150,16 @@
 {0pt}        % No indentation
 {*0}         % No space before the section title
 {*0}         % No space after the section title
+% Subsection
+\titleformat{\subsection}
+{\bfseries\fontsize{10pt}{13pt}\selectfont}
+{\thesubsection}
+{1em}
+{}
+\titlespacing{\subsection}
+{0pt}        % No indentation
+{*0}         % No space before the subsection title
+{*0}         % No space after the subsection title
 % List
 \setlist[enumerate]{
   noitemsep,
