@@ -12,6 +12,7 @@
 \RequirePackage{float}
 \RequirePackage[labelfont=bf, labelsep=period]{caption}
 \RequirePackage[round]{natbib}
+\RequirePackage{textcase}
 
 % Customizing list
 \RequirePackage{enumitem}
