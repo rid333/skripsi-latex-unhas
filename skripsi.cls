@@ -12,6 +12,8 @@
 \RequirePackage{float}
 \RequirePackage[labelfont=bf, labelsep=period]{caption}
 \RequirePackage[round]{natbib}
+\RequirePackage{booktabs}
+\RequirePackage{chngcntr}
 
 % Customizing list
 \RequirePackage{enumitem}
@@ -52,6 +54,7 @@
 % Arial font
 \RequirePackage{fontspec}
 \setmainfont{Arial}
+\RequirePackage{mathastext}
 
 % Margin
 \geometry{
@@ -101,9 +104,17 @@
 \pretocmd{\tableofcontents}{\begingroup\setstretch{1}}{}{}
 \apptocmd{\tableofcontents}{\endgroup}{}{}
 
-% Gambar captio
+% Gambar caption
 \renewcommand{\figurename}{Gambar}
 \renewcommand{\thefigure}{\arabic{figure}}
+\counterwithout{figure}{chapter}
+
+% Table caption
+\counterwithout{table}{section}
+\renewcommand{\tablename}{Tabel}
+
+% Equation numbering
+\renewcommand{\theequation}{\arabic{equation}}
 
 % BIB
 \renewcommand{\bibname}{Daftar Pustaka}
