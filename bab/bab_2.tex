@@ -13,13 +13,13 @@ Adapun peralatan yang digunakan pada penelitian ini adalah sebagai berikut:
   \item Arduino Uno berfungsi sebagai mikrokontroler utama yang
     mengendalikan motor servo pada lengan robot serta menerima sinyal
     dari sensor.
-  \item Motor servo digunakan sebagai aktuator untuk menggerakkan
+  \item Motor \textit{servo} digunakan sebagai aktuator untuk menggerakkan
     bagian-bagian lengan robot sesuai perintah dari Arduino.
   \item Lengan robot EEZYbotARM MK1 berfungsi sebagai struktur
     mekanik yang menjadi tempat pemasangan motor servo dan berperan
     sebagai sistem pergerakan robotik.
-  \item Power supply 5V berfungsi memberikan catu daya stabil untuk
-    motor servo agar dapat beroperasi dengan baik.
+  \item \textit{Power supply} 5V berfungsi memberikan catu daya stabil untuk
+    motor \textit{servo} agar dapat beroperasi dengan baik.
   \item Sensor PIR HC-SR501 digunakan untuk mendeteksi gerakan dan membantu
     menghitung jumlah kontainer cacat dan non-cacat yang lewat.
   \item Kamera digunakan untuk mengambil gambar kontainer kimia, yang
@@ -28,7 +28,7 @@ Adapun peralatan yang digunakan pada penelitian ini adalah sebagai berikut:
   \item Laptop/komputer digunakan untuk mengunggah program ke Arduino
     Uno, serta menjalankan model deteksi berbasis YOLO dan
     \textit{autoencoder} untuk analisis visual.
-  \item Kabel jumper berfungsi menghubungkan berbagai komponen
+  \item Kabel \textit{jumper} berfungsi menghubungkan berbagai komponen
     elektronik seperti sensor dan aktuator ke papan rangkaian dan
     Arduino.
   \item Papan rangkaian berfungsi untuk menyediakan jalur koneksi
@@ -38,10 +38,11 @@ Adapun peralatan yang digunakan pada penelitian ini adalah sebagai berikut:
 \vspace{1em}
 
 \section{Metode Kerja}
-Dalam penelitian ini terdapat beberapa tahapan yang harus dilakukan,
-tahapan penelitian dapat dilihat pada flowchart Gambar
-\ref{fig:bagan-alir}. Penelitian ini dibatasi pada perancangan dan
-pembuatan prototipe sistem deteksi cacat.
+Dalam penelitian ini terdapat beberapa tahapan yang harus dilakukan.
+Tahapan penelitian secara lengkap dapat dilihat pada
+\textit{flowchart} yang tertera
+Gambar \ref{fig:bagan-alir}. Penelitian ini dibatasi pada perancangan
+dan pembuatan prototipe sistem deteksi cacat.
 \begin{figure}[H]
   \centering
   \includegraphics[]{gambar/flowchart.jpg}
@@ -51,26 +52,26 @@ pembuatan prototipe sistem deteksi cacat.
 \vspace{-1em}
 
 Tahapan dimulai dengan kajian mendalam terhadap teknologi robotik,
-algoritma Autoencoder untuk deteksi anomali visual, serta metode
-deteksi objek seperti YOLO (You Only Look Once), guna memperoleh
-pemahaman komprehensif tentang konsep dasar, format dataset, dan
-teknik perancangan model untuk mendeteksi cacat pada kontainer kimia.
-Setelah pemahaman awal diperoleh, dilakukan perancangan sistem yang
-mencakup perangkat keras (lengan robot dan sensor) serta perangkat
-lunak berupa algoritma machine learning. Selanjutnya, sistem robot
-dikalibrasi agar dapat bekerja secara optimal, termasuk proses tuning
-hyperparameter pada model pembelajaran mesin. Jika sistem telah
-berfungsi sesuai dengan yang diharapkan, maka dilanjutkan dengan
-proses pengambilan data sebagai langkah awal dalam pengujian dan
-validasi model.
+algoritma \textit{autoencoder} untuk deteksi anomali visual, serta
+metode deteksi objek seperti \textit{You Only Look Once} (YOLO), guna
+memperoleh pemahaman komprehensif tentang konsep dasar, format
+\textit{dataset}, dan teknik perancangan model untuk mendeteksi cacat
+pada kontainer kimia. Setelah pemahaman awal diperoleh, dilakukan
+perancangan sistem yang mencakup perangkat keras (lengan robot dan
+sensor) serta perangkat lunak berupa algoritma \textit{machine
+learning}. Selanjutnya, sistem robot dikalibrasi agar dapat bekerja
+secara optimal, termasuk proses \textit{tuning hyperparameter} pada
+model pembelajaran mesin. Jika sistem telah berfungsi sesuai dengan
+yang diharapkan, maka dilanjutkan dengan proses pengambilan data
+sebagai langkah awal dalam pengujian dan validasi model.
 
 \vspace{1em}
 
 \subsection{Perancangan \textit{Hardware}}
-Penelitian ini dimulai dengan tahap perancangan hardware. Komponen
-hardware yang digunakan meliputi kamera untuk mengambil gambar
+Penelitian ini dimulai dengan tahap perancangan \textit{hardware}. Komponen
+\textit{hardware} yang digunakan meliputi kamera untuk mengambil gambar
 kontainer kimia, laptop sebagai pusat pemrosesan dan eksekusi
-algoritma pembelajaran mesin, serta motion sensor untuk menghitung
+algoritma pembelajaran mesin, serta \textit{motion sensor} untuk menghitung
 jumlah kontainer kimia, baik yang cacat maupun yang tidak. Adapun
 rancangan hardware dapat dilihat pada Gambar \ref{fig:rangkaian}.
 
@@ -86,17 +87,17 @@ Sistem diawali saat kamera menangkap gambar kontainer kimia yang
 diletakkan di area pengambilan gambar. Gambar ini diproses oleh model
 deteksi objek (YOLO) untuk mengenali keberadaan kontainer sebelum
 tahap deteksi cacat. Selanjutnya, gambar yang telah dikenali dikirim
-ke model deteksi kecacatan berbasis Convolutional Autoencoder untuk
+ke model deteksi kecacatan berbasis \textit{convolutional autoencoder} untuk
 menentukan apakah kontainer mengalami cacat atau tidak. Berdasarkan
 hasil analisis tersebut, sinyal dikirimkan ke mikrokontroler Arduino
 untuk menggerakkan servo sebagai respon terhadap kondisi kontainer.
 Lengan robot kemudian mengambil kontainer kimia dan memindahkannya ke
 wadah yang sesuai, tergantung pada hasil deteksi—apakah kontainer
 tersebut cacat atau tidak. Untuk memantau dan menghitung jumlah
-kontainer yang telah dipindahkan, dua motion sensor dipasang pada
+kontainer yang telah dipindahkan, dua \textit{motion sensor} dipasang pada
 masing-masing wadah (cacat dan noncacat). Data dari sensor ini
 dikirim ke web server, yang menyediakan API untuk dikonsumsi agar
-data jumlah kontainer dapat ditampilkan ke klien secara real-time.
+data jumlah kontainer dapat ditampilkan ke klien secara \textit{real-time}.
 Secara keseluruhan, keterkaitan antar komponen perangkat keras dalam
 sistem ini dapat dilihat pada Gambar \ref{fig:hardware}.
 
@@ -114,28 +115,31 @@ sistem ini dapat dilihat pada Gambar \ref{fig:hardware}.
 Perangkat lunak dalam penelitian ini mencakup perancangan beberapa
 algoritma inti. Pertama, dirancang model deteksi objek berbasis YOLO
 untuk mengenali kontainer kimia pada citra yang diambil oleh kamera.
-Kedua, digunakan Convolutional Autoencoder sebagai model untuk
+Kedua, digunakan \textit{convolutional autoencoder} sebagai model untuk
 mendeteksi cacat atau anomali visual pada kontainer. Selain itu,
 dirancang pula algoritma kontrol untuk mengatur pergerakan lengan
 robot dalam mengambil dan memindahkan kontainer berdasarkan hasil
 klasifikasi. Sistem ini juga terintegrasi dengan modul IoT untuk
-menampilkan data kontainer cacat dan non-cacat pada klien secara real-time. \par
+menampilkan data kontainer cacat dan non-cacat pada klien secara
+\textit{real-time}. \par
 
 Tahap perancangan model deteksi objek dimulai dengan pengumpulan
-dataset berupa gambar kontainer kimia dari berbagai kondisi dan sudut
+\textit{dataset} berupa gambar kontainer kimia dari berbagai kondisi dan sudut
 pandang menggunakan kamera, yang nantinya dipasang bersama lengan
 robot. Setelah gambar terkumpul, dilakukan proses anotasi dengan
-memberikan label dan bounding box pada setiap kontainer sesuai dengan
+memberikan label dan \textit{bounding box} pada setiap kontainer sesuai dengan
 format yang dibutuhkan oleh algoritma YOLO. Dataset yang telah
 dianotasi kemudian digunakan untuk melatih model deteksi objek.
 Tujuannya agar model mampu mendeteksi kontainer kimia secara akurat
 dan cepat dalam berbagai situasi, misalnya ketika kontainer berada
 dalam posisi miring. Setelah proses pelatihan selesai, model
 dievaluasi menggunakan data uji yang belum pernah dilihat sebelumnya.
-Evaluasi dilakukan menggunakan beberapa metrik seperti precision,
-recall, dan mean Average Precision (mAP), guna memastikan bahwa model
+Evaluasi dilakukan menggunakan beberapa metrik seperti \textit{precision},
+\textit{recall}, dan \textit{mean Average Precision} (mAP), guna
+memastikan bahwa model
 memiliki kemampuan generalisasi yang baik dan layak diterapkan di
-sistem robotik secara real-time. Pipeline perancangan model deteksi
+sistem robotik secara \textit{real-time}. \textit{Pipeline}
+perancangan model deteksi
 objek dapat dilihat pada Gambar \ref{fig:pipeline-yolo}.
 
 \begin{figure}[H]
@@ -147,21 +151,25 @@ objek dapat dilihat pada Gambar \ref{fig:pipeline-yolo}.
 \vspace{-1em}
 
 Berikutnya adalah tahap pembangunan model deteksi cacat menggunakan
-algoritma Convolutional Autoencoder. Tahap ini menggunakan dataset
+algoritma \textit{convolutional autoencoder}. Tahap ini menggunakan
+\textit{dataset}
 yang sama seperti yang digunakan pada pelatihan model YOLO, namun
-tanpa menggunakan anotasi bounding box karena sifat unsupervised dari
-autoencoder. Data diproses melalui tahap preprocessing seperti
-resizing, normalisasi, dan augmentasi (rotasi, flipping, pencahayaan)
+tanpa menggunakan anotasi \textit{bounding box} karena sifat
+\textit{unsupervised} dari
+\textit{autoencoder}. Data diproses melalui tahap \textit{preprocessing} seperti
+\textit{resizing}, normalisasi, dan augmentasi (rotasi,
+\textit{flipping}, pencahayaan)
 untuk meningkatkan variasi. Model dirancang dengan dua komponen
-utama: encoder untuk mengekstraksi fitur penting dan menghasilkan
-representasi berdimensi rendah (latent space), serta decoder untuk
+utama: \textit{encoder} untuk mengekstraksi fitur penting dan menghasilkan
+representasi berdimensi rendah (\textit{latent space}), serta
+\textit{decoder} untuk
 merekonstruksi gambar dari representasi tersebut. Setelah arsitektur
 selesai dan data siap, model dilatih untuk meminimalkan perbedaan
 antara gambar asli dan hasil rekonstruksi, sehingga mampu mengenali
 citra normal secara akurat. Evaluasi dilakukan dengan menghitung
-reconstruction error, yang digunakan untuk membedakan antara gambar
+\textit{reconstruction error}, yang digunakan untuk membedakan antara gambar
 normal dan cacat. Ambang batas deteksi ditentukan melalui analisis
-distribusi error pada data validasi. Pipeline perancangan model
+distribusi error pada data validasi. \textit{Pipeline} perancangan model
 deteksi cacat dapat dilihat pada Gambar \ref{fig:pipeline-autoencoder}.
 
 \begin{figure}[H]
@@ -175,8 +183,16 @@ deteksi cacat dapat dilihat pada Gambar \ref{fig:pipeline-autoencoder}.
 \vspace{1em}
 
 \subsection{Bagan Alir Sistem Kerja Alat}
-Bagan alir sistem kerja alat terdiri dari 2 bagian yakni sistem slot
-parkir dan sistem gerbang parkir. Perancangan bagan alir sistem kerja
+Bagan alir kerja sistem secara keseluruhan dimulai saat kamera
+menangkap citra, yang
+kemudian diproses oleh model YOLO untuk mendeteksi objek kontainer.
+Setelah terdeteksi, model \textit{autoencoder} menganalisis citra tersebut
+untuk menentukan apakah terdapat kecacatan. Berdasarkan hasil
+klasifikasi ini, lengan robot akan secara otomatis menyortir
+kontainer ke lokasi yang telah ditentukan, yaitu ke "Box Cacat" jika
+teridentifikasi cacat atau ke lokasi normal jika sebaliknya.
+Terakhir, informasi mengenai hasil penyortiran dikirimkan ke \textit{web
+server} untuk keperluan pemantauan. Perancangan bagan alir sistem kerja
 alat secara keseluruhan ditunjukkan pada Gambar \ref{fig:bagan-alir-kerja}.
 
 \begin{figure}[H]
