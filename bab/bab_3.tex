@@ -4,13 +4,14 @@ Sistem deteksi kecacatan kontainer ini dirancang secara otomatis
 menggunakan kamera sebagai sensor utama dan lengan robot sebagai
 aktuator. Proses diawali dengan model YOLO yang mengidentifikasi
 keberadaan kontainer dari \textit{input} kamera. Jika kontainer terdeteksi,
-citra akan dianalisis oleh model Autoencoder untuk mengklasifikasikan
+citra akan dianalisis oleh model \textit{autoencoder} untuk mengklasifikasikan
 adanya kecacatan. Berdasarkan hasil klasifikasi tersebut, lengan
-robot yang digerakkan servo akan menyortir kontainer ke dalam
-kategori cacat atau non-cacat. Secara terpisah, sensor PIR
-(\textit{Passive Infrared}) berfungsi menghitung jumlah total
+robot yang digerakkan \textit{servo} akan menyortir kontainer ke dalam
+kategori cacat atau non-cacat. Secara terpisah, sensor PIR berfungsi
+menghitung jumlah total
 kontainer pada setiap kategori, di mana data tersebut kemudian
-dikirim (POST) ke \textit{server} untuk visualisasi pada sisi klien. Desain
+dikirim (POST) ke \textit{web-server} untuk visualisasi pada sisi
+klien melalui \textit{website}. Desain
 sistem yang dirancang diilustrasikan pada Gambar \ref{fig:rancang-sistem}.
 
 \begin{figure}[H]
@@ -24,20 +25,20 @@ sistem yang dirancang diilustrasikan pada Gambar \ref{fig:rancang-sistem}.
 \vspace{1em}
 
 \section{Hasil Perancangan Model YOLO}
-\subsection{Dataset dan \textit{Preprocessing}}
+\subsection{\textit{Dataset} dan \textit{Preprocessing}}
 Tahap awal dalam penelitian ini adalah pengumpulan data primer berupa
 citra kontainer menggunakan kamera. Proses akuisisi data dilakukan
-untuk membangun sebuah dataset kustom yang merepresentasikan objek
+untuk membangun sebuah \textit{dataset} kustom yang merepresentasikan objek
 target secara akurat. Total gambar mentah yang berhasil dikumpulkan
 adalah 463 citra. Pengambilan gambar dilakukan dengan melakukan
 variasi terhadap lokasi kontainer untuk memastikan model yang akan
-dilatih nantinya mampu mengenali objek dengan baik. Dataset kemudian
-dibagi menjadi 395 gambar untuk dataset latih dan 68 dataset
-validasi. Distribusi pembagian dataset disajikan pada Tabel
+dilatih nantinya mampu mengenali objek dengan baik. \textit{Dataset} kemudian
+dibagi menjadi 395 gambar untuk \textit{dataset} latih dan 68 \textit{dataset}
+validasi. Distribusi pembagian \textit{dataset} disajikan pada Tabel
 \ref{tab:pembagian-dataset}.
 
 \begin{table}[H]
-  \caption{Distribusi pembagian dataset}
+  \caption{Distribusi pembagian \textit{dataset}}
   \label{tab:pembagian-dataset}
   \vspace{-1em}
   \centering
@@ -54,7 +55,8 @@ validasi. Distribusi pembagian dataset disajikan pada Tabel
 
 Setelah tahap akuisisi data, proses selanjutnya adalah anotasi
 gambar. Anotasi merupakan proses fundamental untuk menghasilkan
-dataset berlabel (\textit{labeled dataset}) yang akan digunakan
+\textit{dataset} berlabel (\textit{labeled \textit{dataset}}) yang
+akan digunakan
 sebagai data pelatihan (\textit{training data}) \citep{19}. Dalam
 konteks penelitian
 ini, anotasi dilakukan dengan memberikan \textit{bounding box} serta label
@@ -69,7 +71,7 @@ secara manual. Contoh hasil anotasi dapat dilihat pada Gambar
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=1\textwidth]{gambar/anotasi.png}
+  \includegraphics[width=0.7\textwidth]{gambar/anotasi.png}
   \caption{Salah satu data \textit{train} dengan labelnya}
   \label{fig:yolo-anotasi}
 \end{figure}
@@ -138,7 +140,7 @@ fitur-fitur dari data latih secara optimal. Hasil pelatihan model
 YOLO setiap 10 \textit{epoch} dapat dilihat pada Tabel \ref{tab:yolo-train}.
 
 \begin{table}[H]
-  \caption{Proses training model YOLO}
+  \caption{Proses \textit{training} model YOLO}
   \label{tab:yolo-train}
   \vspace{-1em}
   \centering
@@ -254,14 +256,23 @@ yang berfungsi untuk mengekstrak fitur laten dari data. Perbedaan
 fundamental VAE dibandingkan pendahulunya terletak pada pendekatan
 Bayesian, di mana vektor laten ($z$) dipaksa mengikuti distribusi
 probabilitas terstruktur, umumnya distribusi Gaussian. Secara
-operasional, encoder VAE ($q_{\phi}(z \mid x)$) tidak hanya
+operasional, \textit{encoder} VAE ($q_{\phi}(z \mid x)$) tidak hanya
 mengompres data \textit{input} ($x$), melainkan juga memetakannya
-ke dalam parameter statistik: sebuah vektor mean (rata-rata) dan
+ke dalam parameter statistik: sebuah vektor \textit{mean} dan
 vektor varians. Selanjutnya, sebuah sampel kode laten ($z$) diambil
 dari distribusi yang diwakili oleh kedua parameter ini, lalu diumpankan
-ke decoder ($p_{\theta}(x \mid z)$) untuk merekonstruksi data \textit{input}
-asli \citep{25}. Arsitektur variational autoencoder yang digunakan pada
-penelitian ini dapat dilihat pada Gambar x.
+ke \textit{decoder} ($p_{\theta}(x \mid z)$) untuk merekonstruksi
+data \textit{input}
+asli \citep{25}. Arsitektur \textit{variational autoencoder} yang digunakan pada
+penelitian ini dapat dilihat pada Gambar \ref{fig:arsitektur-autoencoder}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{gambar/arsitektur_autoencoder.png}
+  \caption{Hasil prediksi YOLO pada data validasi}
+  \label{fig:arsitektur-autoencoder}
+\end{figure}
+\vspace{-1em}
 
 Arsitektur VAE yang diimplementasikan pada penelitian ini dirancang
 untuk memproses citra berukuran 128 $\times$ 128 dengan tiga kanal
@@ -278,28 +289,37 @@ multivariat sebagai ruang laten. Setelah sampling vektor laten $z$,
 linear dan serangkaian lapisan \textit{transpose convolutional}
 (dekonvolusi) yang secara bertahap memperbesar resolusi hingga
 kembali ke ukuran asli citra \textit{input}. Fungsi aktivasi sigmoid pada
-lapisan output memastikan nilai piksel berada pada rentang $[0, 1]$,
+lapisan output memastikan nilai piksel berada pada rentang $\text{[0, 1]}$,
 sehingga hasil rekonstruksi dapat diinterpretasikan sebagai citra valid.
 
 \vspace{1em}
 
-\subsection{Dataset dan \textit{Preprocessing}}
+\subsection{\textit{Dataset} dan \textit{Preprocessing}}
 Tahap ini adalah pengumpulan data primer berupa
 citra kontainer menggunakan kamera. Proses akuisisi data ini
-dilakukan untuk membangun dataset kustom yang secara spesifik
+dilakukan untuk membangun \textit{dataset} kustom yang secara spesifik
 merepresentasikan objek target. Total gambar mentah yang berhasil
-dikumpulkan berjumlah 3000 citra, yang seluruhnya digunakan sebagai
-dataset latih. Sebelum digunakan untuk pelatihan autoencoder, seluruh
+dikumpulkan berjumlah 3005 citra, yang seluruhnya digunakan sebagai
+\textit{dataset} latih. Sebelum digunakan untuk pelatihan
+\textit{autoencoder}, seluruh
 citra diproses menggunakan model YOLO untuk mendeteksi serta
 melakukan \textit{cropping} area kontainer
 secara otomatis. Dengan demikian, hanya bagian kontainer yang relevan
-yang masuk ke pipeline pemrosesan, sehingga model autoencoder dapat
+yang masuk ke pipeline pemrosesan, sehingga model \textit{autoencoder} dapat
 lebih fokus dalam mempelajari fitur visual kontainer secara mendalam.
-Contoh salah satu data dapat dilihat pada Gambar x.
+Contoh salah satu data dapat dilihat pada Gambar \ref{fig:ae-data}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{gambar/ae_data.png}
+  \caption{Hasil prediksi YOLO pada data validasi}
+  \label{fig:ae-data}
+\end{figure}
+\vspace{-1em}
 
 Karena \textit{autoencoder} termasuk dalam kategori \textit{unsupervised
 learning}, data yang digunakan pada penelitian ini tidak memerlukan
-label atau anotasi manual. Seluruh dataset hanya terdiri dari citra
+label atau anotasi manual. Seluruh \textit{dataset} hanya terdiri dari citra
 kontainer yang dalam kondisi baik (bebas kerusakan atau cacat
 visual), sehingga model \textit{autoencoder} dapat belajar merepresentasikan
 distribusi citra kontainer normal secara optimal. Dengan demikian,
@@ -325,7 +345,7 @@ kedua adalah \textit{regularization term}, yang dihitung sebagai
 Kullback-Leibler (KL) \textit{divergence} antara distribusi posterior
 aproksimasi $q_\phi(z|x)$ dan distribusi prior $p_\theta(z)$.
 Komponen ini berfungsi sebagai penalti, supaya distribusi yang
-dihasilkan encoder tetap mendekati distribusi prior sederhana
+dihasilkan \textit{encoder} tetap mendekati distribusi prior sederhana
 seperti distribusi Gaussian \citep{26}. Secara matematis, fungsi \textit{loss}
 VAE dapat ditulis sebagai:
 
@@ -334,17 +354,19 @@ VAE dapat ditulis sebagai:
   p_\theta(x|z)] - D_{KL}(q_\phi(z|x) \parallel p_\theta(z))
 \end{equation}
 
-Proses pelatihan model \textit{variational autoencoder} dilakukan
-menggunakan platform Google
-Colaboratory. Model dilatih secara iteratif selama 100 epoch dengan
+Proses pelatihan model CVAE dilakukan
+menggunakan komputer dengan GPU NVIDIA GeForce RTX 3050 8GB VRAM
+untuk memanfaatkan kemampuan komputasi paralel CUDA. Model dilatih
+secara iteratif selama 100 \textit{epoch} dengan
 \textit{batch size} 64
 dan \textit{optimizer} Adam, agar model dapat mempelajari fitur-fitur dari
 data latih secara
-optimal. Hasil pelatihan model YOLO setiap 10 epoch dapat dilihat
+optimal. Hasil pelatihan model YOLO setiap 10 \textit{epoch} dapat dilihat
 pada Tabel \ref{tab:training-autoencoder}.
 
 \begin{table}[H]
-  \caption{Distribusi pembagian dataset}
+  \caption{Proses training model model \textit{convolutional
+  variational autoencoder} (CVAE)}
   \label{tab:training-autoencoder}
   \vspace{-1em}
   \centering
@@ -369,7 +391,7 @@ pada Tabel \ref{tab:training-autoencoder}.
 
 Pada proses \textit{training}, nilai \textit{loss} rekonstruksi
 secara umum menunjukkan tren penurunan seiring bertambahnya
-\textit{epoch}. Penurunan ini mengindikasikan bahwa model autoencoder
+\textit{epoch}. Penurunan ini mengindikasikan bahwa model \textit{autoencoder}
 semakin mampu mempelajari representasi fitur penting dari data normal
 yang diberikan. Dengan demikian, model menjadi lebih baik dalam
 merekonstruksi kontainer kimia tanpa cacat, sehingga mempermudah
@@ -408,10 +430,10 @@ sudah dapat membedakan kontainer normal dan cacat.
 
 \vspace{1em}
 
-\subsection{Penentuan Threshold Kecacatan}
-Penentuan threshold sangat penting agar sistem deteksi cacat dapat
+\subsection{Penentuan \textit{Threshold} Kecacatan}
+Penentuan \textit{threshold} sangat penting agar sistem deteksi cacat dapat
 membedakan secara akurat antara kontainer kimia yang cacat dan yang
-normal. Tanpa threshold yang tepat, model berpotensi menghasilkan
+normal. Tanpa \textit{threshold} yang tepat, model berpotensi menghasilkan
 banyak kesalahan prediksi, sehingga mengurangi keandalan sistem.
 Dalam penelitian
 ini, metrik \textit{error} yang digunakan untuk mengukur perbedaan antara
@@ -432,11 +454,11 @@ Pengujian dilakukan pada 20 gambar kontainer kimia, terdiri dari 10
 gambar kontainer normal dan 10 gambar kontainer cacat. Dari pengujian
 ini diperoleh distribusi nilai MSE masing-masing gambar untuk
 dianalisis lebih lanjut. Hasil perhitungan MSE pada 20 gambar uji
-tersebut dirangkum pada \ref{tab:error-samples}.
+tersebut dirangkum pada Tabel \ref{tab:error-samples}.
 
 \begin{table}[H]
   \centering
-  \caption{Nilai error untuk setiap sampel}
+  \caption{Nilai \textit{error} untuk setiap sampel}
   \label{tab:error-samples}
   \begin{tabular}{ccc}
     \toprule
@@ -467,7 +489,7 @@ tersebut dirangkum pada \ref{tab:error-samples}.
 \end{table}
 
 Tabel \ref{tab:error-samples} menunjukkan nilai \textit{error} atau selisih
-rekonstruksi (dihitung menggunakan MSE) pada masing-masing sampel
+rekonstruksi pada masing-masing sampel
 gambar, yang terdiri dari 10 kontainer normal dan 10 kontainer cacat.
 Terlihat bahwa sampel dengan kategori normal memiliki nilai error
 yang relatif kecil dan cukup seragam di sekitar 0.0067, menandakan
@@ -479,16 +501,17 @@ direkonstruksi dengan sempurna, sehingga mempermudah deteksi anomali.
 Kurva \textit{Receiver Operating Characteristic} (ROC) digunakan
 sebagai metode analisis untuk mengevaluasi performa model deteksi
 cacat pada kontainer kimia dalam penelitian ini. Kurva ROC dibuat
-dengan memplot nilai 1 - \textit{precision} (\textit{false positive
-rate}) pada sumbu
-x dan \textit{recall} (\textit{true positive rate}) pada sumbu y untuk setiap
-nilai ambang (\textit{threshold}) yang diuji. Nilai
+dengan memplot nilai 1 - \textit{specificity} (\textit{false positive
+rate}) pada sumbu-x dan \textit{recall} (\textit{true positive rate})
+pada sumbu-y untuk setiap
+nilai (\textit{threshold}) yang diuji. \textit{Specificity} sendiri adalah
+ukuran seberapa baik model dalam mengenali data negatif secara benar. Nilai
 \textit{threshold} terbaiki ditentukan dengan memaksimalkan statistik
 Youden J \citep{28}. Kurva ROC dapat dilihat pada Gambar
 \ref{fig:roc}. Persamaan
 statistik Youden J dituliskan sebagai berikut:
 \begin{equation}
-  J = \textit{Recall} + \textit{Precision} - 1
+  J = \textit{True Positive Rate} - \textit{False Positive Rate}
 \end{equation}
 
 \begin{figure}[H]
@@ -502,7 +525,7 @@ statistik Youden J dituliskan sebagai berikut:
 Kurva di atas menunjukkan performa model dalam membedakan kontainer
 cacat dan tidak cacat dengan sangat baik, ditunjukkan oleh garis biru
 yang mendekati titik sudut kiri atas. Berdasarkan perhitungan,
-threshold optimal yang diperoleh adalah sebesar 0.007183, ditandai
+\textit{threshold} optimal yang diperoleh adalah sebesar 0.007183, ditandai
 dengan lingkaran merah pada grafik. Nilai ini digunakan sebagai batas
 deteksi akhir, sehingga model dapat memaksimalkan sensitivitas
 sekaligus meminimalkan kesalahan positif dalam identifikasi cacat.
@@ -511,7 +534,7 @@ sekaligus meminimalkan kesalahan positif dalam identifikasi cacat.
 
 \section{Hasil Pengujian Sistem Lengan Robot}
 
-Setelah model deteksi terlatih dan nilai threshold optimal
+Setelah model deteksi terlatih dan nilai \textit{threshold} optimal
 ditentukan, tahap selanjutnya adalah integrasi sistem dengan lengan
 robot yang dikontrol oleh mikrokontroler Arduino. Berdasarkan hasil
 klasifikasi dari model, lengan robot akan secara otomatis memindahkan
@@ -568,7 +591,9 @@ Tampilan website dan hasil prediksi dapat dilihat pada Gambar
     \includegraphics[width=\textwidth]{gambar/web_ss_cacat.png}
     (b)
   \end{minipage}
-  \caption{Hasil prediksi website: (a) Kontainer normal, (b) kontainer cacat}
+  \centering
+  \caption{Tampilan hasil prediksi melalui \textit{website}: (a)
+  kontainer normal, (b) kontainer cacat}
   \label{fig:web-test}
   \vspace{-1em}
 \end{figure}
@@ -582,11 +607,12 @@ pada Tabel \ref{tab:error-samples-web}.
 
 \begin{table}[H]
   \centering
-  \caption{Nilai error untuk setiap sampel}
+  \caption{Nilai \textit{error} untuk setiap sampel uji}
   \label{tab:error-samples-web}
   \begin{tabular}{cccc}
     \toprule
-    \textbf{Index} & \textbf{Error} & \textbf{Kategori (Threshold <
+    \textbf{No} & \textbf{Error} & \textbf{Kategori
+      (Threshold <
     0.007183)} & \textbf{Label Asli} \\
     \midrule
     1  & 0.006798 & Normal & Normal \\
@@ -623,23 +649,24 @@ pada Tabel \ref{tab:error-samples-web}.
 Tabel \ref{tab:error-samples-web} menyajikan hasil pengujian
 performa model deteksi kecacatan pada 25 sampel kontainer yang
 berbeda untuk memvalidasi efektivitasnya. Keputusan klasifikasi untuk
-setiap sampel didasarkan pada perbandingan nilai error rekonstruksi
-terhadap ambang batas (threshold) yang telah ditentukan sebesar
-0.007183. Sesuai dengan mekanisme ini, objek dengan nilai error di
-bawah threshold dikategorikan sebagai "Normal", sementara objek
-dengan nilai error yang melebihinya dikategorikan sebagai "Cacat".
+setiap sampel didasarkan pada perbandingan nilai \textit{error} rekonstruksi
+terhadap \textit{threshold} yang telah ditentukan sebesar
+0.007183. Sesuai dengan mekanisme ini, objek dengan nilai \textit{error} di
+bawah \textit{threshold} dikategorikan sebagai "Normal", sementara objek
+dengan nilai \textit{error} yang melebihinya dikategorikan sebagai "Cacat".
 Hasil pada tabel secara jelas menunjukkan bahwa untuk keseluruhan 25
 data uji, kolom "Kategori" (label prediksi dari model) sepenuhnya
-konsisten dengan kolom "Label Asli" (kondisi faktual objek). Sebagai
-contoh, pada data indeks ke-2, nilai error yang tinggi (0.008298)
+konsisten dengan kolom "Label Asli" (\textit{ground truth}). Sebagai
+contoh, pada data no. 2, nilai \textit{error} yang tinggi (0.008298)
 berhasil diidentifikasi dengan benar sebagai "Cacat", sementara pada
-data indeks ke-1, nilai error yang rendah (0.006798) juga tepat
-diklasifikasikan sebagai "Normal". Kesesuaian sempurna antara
+data no. 1, nilai \textit{error} yang rendah (0.006798) juga tepat
+diklasifikasikan sebagai "Normal". Kesesuaian antara
 prediksi dan kondisi sebenarnya pada seluruh rangkaian pengujian ini
-membuktikan bahwa model, dengan threshold yang dipilih, mampu
+membuktikan bahwa model, dengan \textit{threshold} yang dipilih, mampu
 mencapai tingkat akurasi 100\% dalam membedakan antara kontainer
-normal dan cacat. Gambar \ref{fig:web-25} menampilkan hasil website
-setelah melakukan prediksi terhadap 25 sampel.
+normal dan cacat. Gambar \ref{fig:web-25} menampilkan hasil \textit{website}
+setelah melakukan prediksi terhadap 25 sampel yang juga menunjukkan
+hasil yang sama dengan Tabel \ref{tab:error-samples-web}.
 
 \begin{figure}[H]
   \centering
