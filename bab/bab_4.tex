@@ -1,16 +1,56 @@
 \chapter{KESIMPULAN}
 \section{Kesimpulan}
-Berdasarkan hasil perancangan, analisis, dan implementasi alat yang telah digunakan, maka dapat diambil kesimpulan sebagai berikut:
+Berdasarkan hasil perancangan, analisis, dan implementasi alat yang
+telah digunakan, maka dapat diambil kesimpulan sebagai berikut:
 \begin{enumerate}
-   \item Kesimpulan 1
-   \item Kesimpulan 2
+  \item Model deteksi objek berbasis YOLO telah berhasil dirancang dan
+    dilatih untuk mengenali kontainer kimia dengan akurasi dan
+    presisi lokalisasi yang sangat tinggi. Kinerja model, yang
+    dievaluasi menggunakan metrik \textit{mean Average Precision} (mAP),
+    menunjukkan kemampuan yang sangat bagus dalam mendeteksi
+    keberadaan objek dan menentukan \textit{bounding box} secara akurat.
+  \item Model deteksi kecacatan menggunakan algoritma \textit{convolutional
+    variational autoencoder} (CVAE) terbukti efektif dalam
+    mengidentifikasi anomali visual pada permukaan kontainer. Model
+    dilatih pada \textit{dataset} citra normal (tanpa cacat). Hasilnya, model
+    mampu merekonstruksi citra normal dengan \textit{reconstruction
+    error} yang rendah. Sebaliknya, kontainer cacat menghasilkan \textit{error}
+    yang signifikan lebih tinggi. Penentuan \textit{threshold} optimal sebesar
+    0.007183 dilakukan melalui analisis kurva ROC. \textit{Threshold} ini
+    mampu mencapai tingkat akurasi 100\% pada 25 sampel uji.
+  \item Sistem ini mampu menjalankan alur kerja otomasi secara
+    menyeluruh: mulai dari akuisisi citra oleh kamera, identifikasi
+    objek oleh YOLO, analisis kecacatan oleh CVAE, hingga penyortiran
+    fisik kontainer oleh lengan robot ke area yang telah ditentukan
+    (cacat atau normal). Dengan demikian, penelitian ini berhasil
+    mendemonstrasikan kelayakan sebuah sistem inspeksi visual cerdas
+    dan otomatis untuk penanganan kontainer di lingkungan industri terisolasi.
 \end{enumerate}
 
 \vspace{1em}
 
 \section{Saran}
-Alat yang telah dibuat memiliki potensi untuk dikembangkan lebih lanjut. Berikut adalah beberapa saran untuk penelitian selanjutnya:
+Alat yang telah dibuat memiliki potensi untuk dikembangkan lebih
+lanjut. Berikut adalah beberapa saran untuk penelitian selanjutnya:
 \begin{enumerate}
-   \item Saran 1
-   \item Saran 2
+  \item Penelitian selanjutnya disarankan mencoba pendekatan
+    \textit{supervised learning}, seperti \textit{convolutional
+    neural network} (CNN)
+    atau YOLO yang diadaptasi untuk klasifikasi cacat. Dengan adanya
+    label pada data cacat, model diharapkan dapat mengenali berbagai
+    jenis kerusakan secara lebih spesifik dan meningkatkan akurasi
+    deteksi pada kondisi industri nyata.
+  \item Kontrol pergerakan lengan robot pada prototipe ini masih
+    bersifat \textit{hard-coded}, dengan sudut \textit{servo} yang ditentukan
+    sebelumnya. Untuk meningkatkan fleksibilitas, disarankan
+    menggunakan \textit{inverse kinematics}, sehingga lengan dapat secara
+    dinamis menghitung sudut sendi untuk mencapai koordinat target
+    (x, y, z). Dengan demikian, sistem mampu beradaptasi \textit{real-time}
+    terhadap perubahan posisi objek tanpa perlu pemrograman ulang manual.
+  \item Prototipe ini memanfaatkan satu kamera dengan sudut pandang
+    tunggal untuk akuisisi citra. Keterbatasan ini menyebabkan
+    inspeksi hanya dapat dilakukan pada permukaan yang terlihat oleh
+    kamera, sehingga potensi adanya cacat di sisi lain kontainer akan
+    terlewatkan. Untuk mengatasi hal ini, penelitian selanjutnya
+    dapat berfokus pada pengembangan sistem inspeksi 360 derajat.
 \end{enumerate}
