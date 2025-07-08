@@ -46,9 +46,84 @@ Gambar \ref{fig:bagan-umum}. Penelitian ini dibatasi pada perancangan
 dan pembuatan prototipe sistem deteksi cacat otomatis.
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{gambar/bagan-umum.png}
+  \includegraphics[width=0.7\textwidth]{gambar/bagan-umum.png}
   \caption{Bagan alir penelitian}
   \label{fig:bagan-umum}
+\end{figure}
+\vspace{-1em}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+      every node/.style={font=\fontsize{9}{11}\selectfont},
+      node distance = 0.67cm and 1cm
+    ]
+    \node (mulai) [startstop] {Mulai};
+    \node (literatur) [process, below=of mulai] {Studi Literatur};
+    \node (perancangan-alat) [process, below=of literatur] {Perancangan Alat};
+
+    % Split the path relative to "Perancangan Alat"
+    \node (perancangan-hardware) [process, align=center, below
+    left=of perancangan-alat]
+    {Perancangan \\ \textit{Hardware}};
+    \node (perancangan-software) [process, align=center, below
+    right=of perancangan-alat]
+    {Perancangan \\ \textit{Software}};
+
+    % Keep the parallel paths aligned
+    \node (pembuatan-hardware) [process, align=center, below=of
+    perancangan-hardware]
+    {Pembuatan \\ \textit{Hardware}};
+    \node (pembuatan-software) [process, align=center, below=of
+    perancangan-software]
+    {Pembuatan \\ \textit{Software}};
+
+    %--- Here's the first trick: create a coordinate to merge the paths ---
+    \coordinate (merge1) at
+    ($(pembuatan-hardware.south)!0.5!(pembuatan-software.south)$);
+    \node (kalibrasi-alat) [process, align=center, below=of merge1,
+    yshift=-0.5cm] {Kalibrasi Alat}; % yshift to add a bit of space
+    % after the merge
+
+    % Split the path again
+    \node (kalibrasi-sensor) [process, align=center, below left=of
+    kalibrasi-alat]
+    {Kalibrasi \\ Sensor/Lengan Robot};
+    \node (kalibrasi-parameter) [process, align=center, below
+    right=of kalibrasi-alat]
+    {\textit{Tuning} \\ \textit{Hyperparameter}};
+
+    %--- Second trick: use another coordinate to merge again ---
+    \coordinate (merge2) at
+    ($(kalibrasi-sensor.south)!0.5!(kalibrasi-parameter.south)$);
+    \node (pengujian-sistem) [decision, align=center, below=of
+    merge2, yshift=-0.5cm] {Pengujian Sistem};
+
+    % Final node, perfectly centered
+    \node (analisis-hasil) [process, below=of pengujian-sistem]
+    {Analisis Hasil};
+    \node (selesai) [startstop, below=of analisis-hasil]
+    {Selesai};
+
+    % Arrow
+    \draw [arrow] (mulai) -- (literatur);
+    \draw [arrow] (literatur) -- (perancangan-alat);
+    \draw [arrow] (perancangan-alat) -| (perancangan-hardware);
+    \draw [arrow] (perancangan-alat) -| (perancangan-software);
+    \draw [arrow] (perancangan-hardware) -- (pembuatan-hardware);
+    \draw [arrow] (perancangan-software) -- (pembuatan-software);
+    \draw [arrow] (pembuatan-hardware) |- (kalibrasi-alat);
+    \draw [arrow] (pembuatan-software) |- (kalibrasi-alat);
+
+    \draw (kalibrasi-alat) -- (kalibrasi-alat.south |-
+    kalibrasi-sensor.east);
+    \draw [arrow] (kalibrasi-alat.south |- kalibrasi-sensor.east) --
+    (kalibrasi-sensor);
+    \draw [arrow] (kalibrasi-alat.south |- kalibrasi-parameter.west) --
+    (kalibrasi-parameter);
+  \end{tikzpicture}
+  \caption{Bagan alir penelitian}
+  \label{fig:bagan-umum-test}
 \end{figure}
 \vspace{-1em}
 
