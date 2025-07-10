@@ -76,7 +76,9 @@
   contents={}
 }
 % --- TOC & Chapter Formatting ---
-\renewcommand\contentsname{\vspace*{-3cm}}
+\addto\captionsindonesian{
+  \renewcommand\contentsname{\vspace*{-3cm}}
+}
 \renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
 
 \makeatletter
