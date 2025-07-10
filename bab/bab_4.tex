@@ -9,14 +9,14 @@ telah digunakan, maka dapat diambil kesimpulan sebagai berikut:
     dievaluasi menggunakan metrik \textit{mean Average Precision} (mAP),
     menunjukkan kemampuan yang sangat bagus dalam mendeteksi
     keberadaan objek dan menentukan \textit{bounding box} secara akurat.
-  \item Model deteksi kecacatan menggunakan algoritma \textit{convolutional
-    variational autoencoder} (CVAE) terbukti efektif dalam
-    mengidentifikasi anomali visual pada permukaan kontainer. Model
+  \item Model deteksi kecacatan menggunakan algoritma (CVAE) terbukti
+    efektif dalam mengidentifikasi anomali visual pada permukaan
+    kontainer. Model
     dilatih pada \textit{dataset} citra normal (tanpa cacat). Hasilnya, model
     mampu merekonstruksi citra normal dengan \textit{reconstruction
     error} yang rendah. Sebaliknya, kontainer cacat menghasilkan \textit{error}
-    yang signifikan lebih tinggi. Penentuan \textit{threshold} optimal sebesar
-    0,007183 dilakukan melalui analisis kurva ROC. \textit{Threshold} ini
+    yang signifikan lebih tinggi. Penentuan ambang batas optimal sebesar
+    0,007183 dilakukan melalui analisis kurva ROC. Ambang batas ini
     mampu mencapai tingkat akurasi 100\% pada 25 sampel uji.
   \item Sistem ini mampu menjalankan alur kerja otomasi secara
     menyeluruh: mulai dari akuisisi citra oleh kamera, identifikasi

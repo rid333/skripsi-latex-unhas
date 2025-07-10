@@ -149,6 +149,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Redefine
 % Chapter
+\renewcommand{\thechapter}{\Roman{chapter}}
 \titleformat{\chapter}[display]
 {\vspace*{-15pt}\bfseries\centering\fontsize{11pt}{13pt}\selectfont}
 {BAB\ \thechapter}
@@ -159,6 +160,7 @@
 {*0}
 {1.15\baselineskip}
 % Section
+\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
 \titleformat{\section}
 {\bfseries\fontsize{10pt}{13pt}\selectfont}
 {\thesection}

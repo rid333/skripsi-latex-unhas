@@ -9,12 +9,12 @@ Alridho. \textbf{JUDUL BAHASA INDONESIA} (dibimbing oleh Prof. Dr. Arifin, M.T.)
 \vspace*{0.1cm}
 
 \noindent
-\lipsum[1] \par
+\textbf{Latar Belakang}. Inspeksi manual pada kontainer kimia di industri memiliki tingkat kesalahan yang tinggi, berkisar antara 20\% hingga 30\%, dan menimbulkan risiko paparan zat berbahaya bagi pekerja. \textit{Artificial Intelligence} (AI) dan robotika dapat meningkatkan efisiensi, keamanan, dan produktivitas. Model deteksi cacat seperti \textit{autoencoder} sangat efektif karena mampu belajar dari data normal untuk mengidentifikasi anomali, yang sangat berguna ketika data cacat sulit diperoleh. \textbf{Tujuan}. Penelitian ini bertujuan untuk (1) merancang model deteksi objek berbasis YOLO untuk mengenali kontainer kimia secara akurat, (2) membangun model deteksi kecacatan menggunakan algoritma convolutional autoencoder (CVAE) yang efektif, dan (3) mengintegrasikan kedua model tersebut ke dalam sistem lengan robot untuk identifikasi dan penyortiran otomatis. \textbf{Metode}. Penelitian ini menggunakan pendekatan eksperimental dengan merancang prototipe yang terdiri dari perangkat keras dan lunak. Perangkat keras utama meliputi lengan robot, Arduino Uno, motor servo, sensor PIR, dan kamera. Prosesnya dimulai saat kamera menangkap citra kontainer. Model YOLO kemudian mendeteksi objek kontainer dari citra tersebut. Selanjutnya, model CVAE menganalisis citra untuk menentukan ada atau tidaknya cacat dengan menghitung \textit{reconstruction error}. Berdasarkan hasil analisis, lengan robot secara otomatis menyortir kontainer ke area "cacat" atau "normal". Ambang batas untuk penentuan cacat ditetapkan sebesar 0,007183 melalui analisis kurva ROC. \textbf{Hasil}. Hasil penelitian menunjukkan model deteksi objek YOLO berhasil dilatih dengan performa sangat tinggi, di mana nilai mAP@50 mendekati 1.00. Model deteksi kecacatan CVAE, setelah dilatih, mampu membedakan kontainer cacat dan normal secara efektif. Pengujian sistem secara menyeluruh sebanyak 25 kali pada sampel uji menunjukkan bahwa prototipe mampu mengklasifikasikan dan menyortir kontainer dengan tingkat akurasi 100\%. Seluruh proses, termasuk jumlah kontainer yang diinspeksi dan tingkat kecacatan, berhasil ditampilkan secara \textit{real-time} melalui berbasis \textit{web}. \textbf{Kesimpulan}. Prototipe sistem inspeksi visual cerdas ini berhasil mendemonstrasikan kelayakannya untuk otomasi penuh di lingkungan industri terisolasi. Sistem ini berhasil menggabungkan model deteksi objek YOLO yang akurat, model deteksi kecacatan CVAE yang efektif dengan akurasi 100\% pada data uji, serta sistem penyortiran fisik menggunakan lengan robot secara terintegrasi dan otomatis. \par 
 
 \vspace*{0.1cm}
 
 \noindent
-\textbf{Kata Kunci:} Prototipe; monitoring; IoT; sensor; telegram.
+\textbf{Kata Kunci:} Deteksi cacat; prototipe; lengan robot; YOLO; autoencoder; IoT.
 
 \endgroup
 

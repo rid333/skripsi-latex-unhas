@@ -1,6 +1,6 @@
 \chapter{HASIL DAN PEMBAHASAN}
 \section{Hasil Perancangan Sistem}
-Sistem deteksi kecacatan kontainer ini dirancang secara otomatis
+Sistem deteksi ini dirancang secara otomatis
 menggunakan kamera sebagai sensor utama dan lengan robot sebagai
 aktuator. Proses diawali dengan model YOLO yang mengidentifikasi
 keberadaan kontainer dari \textit{input} kamera. Jika kontainer terdeteksi,
@@ -10,8 +10,8 @@ robot yang digerakkan \textit{servo} akan menyortir kontainer ke dalam
 kategori cacat atau non-cacat. Secara terpisah, sensor PIR berfungsi
 menghitung jumlah total
 kontainer pada setiap kategori, di mana data tersebut kemudian
-dikirim (POST) ke \textit{web-server} untuk visualisasi pada sisi
-klien melalui \textit{website}. Desain
+dikirim \textit{web-server} untuk visualisasi pada sisi
+klien melalui \textit{dashboard} berbasis \textit{website}. Desain
 sistem yang dirancang diilustrasikan pada Gambar \ref{fig:rancang-sistem}.
 
 \begin{figure}[H]
@@ -33,8 +33,8 @@ target secara akurat. Total gambar mentah yang berhasil dikumpulkan
 adalah 463 citra. Pengambilan gambar dilakukan dengan melakukan
 variasi terhadap lokasi kontainer untuk memastikan model yang akan
 dilatih nantinya mampu mengenali objek dengan baik. \textit{Dataset} kemudian
-dibagi menjadi 395 gambar untuk \textit{dataset} latih dan 68 \textit{dataset}
-validasi. Distribusi pembagian \textit{dataset} disajikan pada Tabel
+dibagi menjadi 395 gambar untuk data latih dan 68 data validasi.
+Distribusi pembagian \textit{dataset} disajikan pada Tabel
 \ref{tab:pembagian-dataset}.
 
 \begin{table}[H]
@@ -55,18 +55,15 @@ validasi. Distribusi pembagian \textit{dataset} disajikan pada Tabel
 
 Setelah tahap akuisisi data, proses selanjutnya adalah anotasi
 gambar. Anotasi merupakan proses fundamental untuk menghasilkan
-\textit{dataset} berlabel (\textit{labeled \textit{dataset}}) yang
-akan digunakan
-sebagai data pelatihan (\textit{training data}) \citep{19}. Dalam
-konteks penelitian
-ini, anotasi dilakukan dengan memberikan \textit{bounding box} serta label
-kelas pada setiap objek di dalam gambar. Metode ini sangat penting
-karena arsitektur YOLO dirancang untuk memprediksi \textit{bounding box} dan
-probabilitas kelas secara bersamaan, sehingga memerlukan data latih
-dengan format spesifik tersebut untuk dapat melakukan deteksi objek
-secara \textit{real-time} \citep{20}. Sebanyak 463 gambar kontainer
-telah dianotasi
-secara manual. Contoh hasil anotasi dapat dilihat pada Gambar
+\textit{dataset} berlabel yang
+akan digunakan sebagai data pelatihan \citep{19}. Dalam
+konteks penelitian ini, anotasi dilakukan dengan memberikan
+\textit{bounding box} serta label kelas pada setiap objek di dalam
+gambar. Metode ini sangat penting karena arsitektur YOLO dirancang
+untuk memprediksi \textit{bounding box} dan probabilitas kelas secara
+bersamaan sehingga memerlukan data latih dengan format spesifik
+tersebut \citep{20}. Sebanyak 463 gambar kontainer telah
+dianotasi secara manual. Contoh hasil anotasi dapat dilihat pada Gambar
 \ref{fig:yolo-anotasi}.
 
 \begin{figure}[H]
@@ -80,18 +77,18 @@ secara manual. Contoh hasil anotasi dapat dilihat pada Gambar
 \vspace{1em}
 
 \subsection{Hasil Pelatihan Model}
-Pada penelitian ini, \textit{mean Average Precision} (mAP) digunakan sebagai
-metrik utama untuk mengukur performa model YOLO dalam mendeteksi
-kontainer kimia. Akurasi deteksi ini sangat penting agar lengan robot
-dapat melakukan inspeksi kecacatan secara tepat. Metrik ini dihitung
-berdasarkan \textit{Average Precision} (AP), yang merupakan kombinasi dari
+Pada penelitian ini, \textit{mean Average Precision} (mAP) digunakan
+sebagai metrik utama untuk mengukur performa model YOLO. Akurasi
+deteksi ini sangat penting agar lengan robot dapat melakukan inspeksi
+kecacatan secara tepat. Metrik ini dihitung berdasarkan
+\textit{Average Precision} (AP), yang merupakan kombinasi dari
 \textit{precision} dan \textit{recall} untuk setiap kelas secara
 individual. Nilai mAP
 sendiri adalah rata-rata AP untuk semua kelas, sehingga mampu
 memberikan gambaran performa model yang komprehensif \citep{21}. \par
 
 Untuk menentukan apakah sebuah prediksi dianggap benar (\textit{True
-Positive}) atau salah (\textit{False Positive}), digunakanlah metrik
+Positive}) atau salah (\textit{False Positive}), digunakan metrik
 \textit{Intersection over Union} (IoU). IoU merupakan rasio antara area
 tumpang tindih (\textit{overlap}) dari \textit{bounding box} hasil prediksi
 ($BB_{predict}$) dengan
@@ -105,12 +102,11 @@ dengan objek sebenarnya. IoU dihitung menggunakan persamaan:
 \end{equation}
 \indent
 \textit{Precision} mengukur proporsi prediksi positif yang benar (\textit{True
-Positive}) terhadap seluruh prediksi positif (TP + \textit{False Positive}),
-sehingga menunjukkan kemampuan model dalam meminimalkan kesalahan
+Positive}) terhadap seluruh prediksi positif (TP + \textit{False
+Positive}), sehingga menunjukkan kemampuan model dalam meminimalkan kesalahan
 deteksi. Sementara itu, \textit{recall} atau \textit{true positive
 rate} mengukur seberapa banyak \textit{instance} positif sebenarnya yang
-berhasil dideteksi dengan benar, sehingga menggambarkan kemampuan
-model dalam menemukan semua objek yang ada \citep{23}. \textit{Precision} dan
+berhasil dideteksi \citep{23}. \textit{Precision} dan
 \textit{recall} dapat dihitung menggunakan persamaan:
 \begin{equation}
   Precision = \frac{TP}{TP + FP}, \quad
@@ -118,7 +114,7 @@ model dalam menemukan semua objek yang ada \citep{23}. \textit{Precision} dan
 \end{equation}
 Model YOLO yang digunakan dalam penelitian ini hanya
 memprediksi satu kelas yaitu kontainer kimia, maka nilai mAP setara
-dengan nilai AP. Nilai AP sendiri dihitung sebagai rata-rata
+dengan nilai AP. Nilai AP dihitung sebagai rata-rata
 \textit{precision} di seluruh
 rentang nilai \textit{recall} (0 hingga 1) \citep{24}, sebagaimana
 dirumuskan dalam
@@ -126,6 +122,7 @@ Persamaan 3, di mana P adalah \textit{precision} dan r adalah \textit{recall}.
 \begin{equation}
   AP = \int_{0}^{1} P(r) \,dr
 \end{equation}
+\indent
 Proses pelatihan model YOLO dilakukan menggunakan \textit{platform}
 \textit{Google
 Colaboratory}. Model dilatih secara iteratif selama 50 \textit{epoch} dengan
@@ -176,15 +173,15 @@ ke 0,1163, serta \textit{Val/DFL Loss} dari 0,89890 ke 0,8156.
 Penurunan yang konsisten pada semua komponen \textit{loss} validasi
 menunjukkan bahwa model tidak hanya mampu belajar dengan baik pada
 data \textit{train}, tetapi juga memiliki kemampuan generalisasi yang
-baik terhadap data yang belum pernah dilihat sebelumnya.
+baik pada data validasi.
 
 Namun, penilaian kinerja model tidak dapat semata-mata bergantung
 pada nilai \textit{loss}. Diperlukan metrik tambahan seperti mAP
 untuk mengevaluasi akurasi deteksi serta kualitas prediksi
 \textit{bounding box} secara keseluruhan. Pada penelitian ini
-digunakan mAP@50 (IoU \textit{threshold} 50\%) untuk mengukur
+digunakan mAP@50 (IoU ambang batas 50\%) untuk mengukur
 keberhasilan deteksi secara lebih longgar, serta mAP@95 (rata-rata
-mAP dari IoU \textit{threshold} 50\% hingga 95\% dengan interval 5\%)
+mAP dari IoU ambang batas 50\% hingga 95\% dengan interval 5\%)
 untuk menilai ketepatan prediksi \textit{bounding box} secara lebih
 ketat dan detail. Hasil pengukuran mAP pada tiap \textit{epoch} dapat
 dilihat pada Gambar \ref{fig:map}.
@@ -215,7 +212,7 @@ menggunakan metrik mAP seiring berjalannya
 50 \textit{epoch} pelatihan. Grafik di sebelah kiri, mAP@50, yang menggunakan
 ambang batas IoU longgar (50\%), menunjukkan bahwa model dengan
 sangat cepat mencapai performa puncak. Terlihat bahwa nilainya
-melonjak mendekati 1,00 hanya dalam 10-15 \textit{epoch} pertama lalu
+melonjak mendekati 1 hanya dalam 10-15 \textit{epoch} pertama lalu
 cenderung datar, menandakan model mampu mempelajari cara mendeteksi
 keberadaan objek secara umum dengan sangat cepat. Sebaliknya, grafik
 di sebelah kanan, mAP@50-95, yang mengukur performa pada rentang
@@ -223,7 +220,7 @@ ambang batas IoU yang lebih ketat (50\% hingga 95\%), menunjukkan
 kurva pembelajaran yang lebih bertahap dan konsisten. Peningkatan
 yang lebih landai ini mengindikasikan bahwa model menggunakan
 mayoritas waktu pelatihannya untuk terus-menerus menyempurnakan
-presisi dan akurasi lokalisasi bounding box-nya. Secara keseluruhan,
+presisi dan akurasi lokalisasi \textit{bounding box}-nya. Secara keseluruhan,
 pencapaian nilai mAP yang sangat tinggi pada kedua metrik di akhir
 pelatihan menandakan model final yang dihasilkan tidak hanya mampu
 mendeteksi objek, tetapi juga sangat akurat dalam menentukan
@@ -297,7 +294,7 @@ dikumpulkan berjumlah 3005 citra, yang seluruhnya digunakan sebagai
 citra diproses menggunakan model YOLO untuk mendeteksi serta
 melakukan \textit{cropping} area kontainer
 secara otomatis. Dengan demikian, hanya bagian kontainer yang relevan
-yang masuk ke pipeline pemrosesan, sehingga model \textit{autoencoder} dapat
+yang masuk ke alur pemrosesan, sehingga model \textit{autoencoder} dapat
 lebih fokus dalam mempelajari fitur visual kontainer secara mendalam.
 Contoh salah satu data dapat dilihat pada Gambar \ref{fig:ae-data}.
 
@@ -311,11 +308,12 @@ Contoh salah satu data dapat dilihat pada Gambar \ref{fig:ae-data}.
 
 Karena \textit{autoencoder} termasuk dalam kategori \textit{unsupervised
 learning}, data yang digunakan pada penelitian ini tidak memerlukan
-label atau anotasi manual. Seluruh \textit{dataset} hanya terdiri dari citra
-kontainer yang dalam kondisi baik (bebas kerusakan atau cacat
-visual), sehingga model \textit{autoencoder} dapat belajar merepresentasikan
+label atau anotasi manual. Seluruh data pada \textit{dataset} terdiri
+dari citra kontainer dalam kondisi bebas cacat visual, sehingga model
+\textit{autoencoder} dapat belajar merepresentasikan
 distribusi citra kontainer normal secara optimal. Dengan demikian,
-\textit{autoencoder} akan berfokus pada rekonstruksi citra input semirip
+\textit{autoencoder} akan berfokus pada rekonstruksi citra
+\textit{input} semirip
 mungkin, dan nantinya dapat digunakan untuk mendeteksi anomali atau
 kerusakan berdasarkan perbedaan signifikan antara citra asli dan
 hasil rekonstruksi.
@@ -344,16 +342,15 @@ VAE dapat ditulis sebagai:
   \mathcal{L}(\theta, \phi; x) = \mathbb{E}{q\phi(z|x)}[\log
   p_\theta(x|z)] - D_{KL}(q_\phi(z|x) \parallel p_\theta(z))
 \end{equation}
-
+\indent
 Proses pelatihan model CVAE dilakukan
 menggunakan komputer dengan GPU NVIDIA GeForce RTX 3050 8GB VRAM
 untuk memanfaatkan kemampuan komputasi paralel CUDA. Model dilatih
 secara iteratif selama 100 \textit{epoch} dengan
 \textit{batch size} 64
-dan \textit{optimizer} Adam, agar model dapat mempelajari fitur-fitur dari
-data latih secara
-optimal. Hasil pelatihan model YOLO setiap 10 \textit{epoch} dapat dilihat
-pada Tabel \ref{tab:training-autoencoder}.
+dan \textit{optimizer} Adam, agar model dapat mempelajari fitur-fitur
+dari data latih secara optimal. Hasil pelatihan model YOLO setiap 10
+\textit{epoch} dapat dilihat pada Tabel \ref{tab:training-autoencoder}.
 
 \begin{table}[H]
   \caption{Proses \textit{training} model model \textit{convolutional
@@ -421,14 +418,14 @@ sudah dapat membedakan kontainer normal dan cacat.
 
 \vspace{1em}
 
-\subsection{Penentuan \textit{Threshold} Kecacatan}
-Penentuan \textit{threshold} sangat penting agar sistem deteksi cacat dapat
+\subsection{Penentuan Ambang Batas Kecacatan}
+Penentuan ambang batas sangat penting agar sistem deteksi cacat dapat
 membedakan secara akurat antara kontainer kimia yang cacat dan yang
-normal. Tanpa \textit{threshold} yang tepat, model berpotensi menghasilkan
+normal. Tanpa ambang batas yang tepat, model berpotensi menghasilkan
 banyak kesalahan prediksi, sehingga mengurangi keandalan sistem.
-Dalam penelitian
-ini, metrik \textit{error} yang digunakan untuk mengukur perbedaan antara
-citra asli dan hasil rekonstruksi adalah \textit{Mean Squared Error} (MSE).
+Dalam penelitian ini, metrik \textit{error} yang digunakan untuk
+mengukur perbedaan antara citra asli dan hasil rekonstruksi adalah
+\textit{Mean Squared Error} (MSE).
 
 MSE merupakan metrik yang paling umum digunakan untuk mengukur
 kualitas citra secara kuantitatif. MSE menghitung rata-rata selisih
@@ -500,9 +497,9 @@ sebagai metode analisis untuk mengevaluasi performa model deteksi
 cacat pada kontainer kimia dalam penelitian ini. Kurva ROC dibuat
 dengan memplot nilai 1 - \textit{specificity} (\textit{false positive
 rate}) pada sumbu-x dan \textit{recall} (\textit{true positive rate})
-pada sumbu-y untuk setiap nilai (\textit{threshold}) yang diuji.
+pada sumbu-y untuk setiap nilai ambang batas yang diuji.
 \textit{Specificity} sendiri adalah ukuran seberapa baik model dalam
-mengenali data negatif secara benar. Nilai \textit{threshold}
+mengenali data negatif secara benar. Nilai ambang batas
 terbaiki ditentukan dengan memaksimalkan statistik Youden J, yang
 dirumuskan pada Persamaan 6
 \citep{28}. Kurva ROC yang menggambarkan kinerja model secara
@@ -519,7 +516,7 @@ menyeluruh dapat dilihat pada Gambar \ref{fig:roc}.
 Kurva di atas menunjukkan performa model dalam membedakan kontainer
 cacat dan tidak dengan sangat baik, ditunjukkan oleh garis biru
 yang mendekati titik sudut kiri atas. Berdasarkan perhitungan,
-\textit{threshold} optimal yang diperoleh adalah sebesar 0,007183, ditandai
+ambang batas optimal yang diperoleh adalah sebesar 0,007183, ditandai
 dengan lingkaran merah pada grafik. Nilai ini digunakan sebagai batas
 deteksi akhir, sehingga model dapat memaksimalkan sensitivitas
 sekaligus meminimalkan kesalahan positif dalam identifikasi cacat.
@@ -528,14 +525,14 @@ sekaligus meminimalkan kesalahan positif dalam identifikasi cacat.
 
 \section{Hasil Pengujian Sistem Lengan Robot}
 
-Setelah model deteksi terlatih dan nilai \textit{threshold} optimal
+Setelah model deteksi terlatih dan nilai ambang batas optimal
 ditentukan, tahap selanjutnya adalah integrasi sistem dengan lengan
 robot yang dikontrol oleh mikrokontroler Arduino. Berdasarkan hasil
-klasifikasi dari model, lengan robot akan secara otomatis memindahkan
+klasifikasi dari model, lengan robot secara otomatis memindahkan
 kontainer kimia. Objek akan diarahkan ke sebelah kiri jika sistem
 mengidentifikasinya sebagai cacat, dan ke sebelah kanan jika
-dinyatakan normal. Gambar \ref{fig:robot-only} mengilustrasikan aksi lengan
-robot ketika sedang menyortir objek yang teridentifikasi cacat.
+dinyatakan normal. Gambar \ref{fig:robot-only} mengilustrasikan aksi
+lengan robot ketika sedang menyortir objek yang teridentifikasi cacat.
 
 \begin{figure}[H]
   \centering
@@ -559,15 +556,15 @@ robot ketika sedang menyortir objek yang teridentifikasi cacat.
 \end{figure}
 
 Setelah lengan robot melepaskan kontainer di area penyortiran yang
-telah ditentukan (kiri untuk cacat, kanan untuk normal), sebuah
-sensor PIR yang terpasang di lokasi tersebut akan
-mendeteksi keberadaan objek. Deteksi dari sensor PIR ini berfungsi
+telah ditentukan, sebuah sensor PIR yang terpasang di lokasi tersebut
+akan mendeteksi keberadaan objek. Deteksi dari sensor PIR ini berfungsi
 sebagai sinyal konfirmasi bahwa satu siklus penyortiran telah
 selesai. Sinyal ini kemudian memicu pengiriman data hasil
 klasifikasi, yang mencakup citra kontainer beserta label statusnya,
-ke server pusat. Untuk menampilkan informasi ini secara dinamis dan
-instan kepada klien, sistem memanfaatkan protokol \textit{WebSocket}.
-Tampilan website dan hasil prediksi dapat dilihat pada Gambar
+ke \textit{web server}. Untuk menampilkan informasi ini secara
+\textit{real-time} kepada klien, sistem memanfaatkan protokol
+\textit{WebSocket}. Tampilan website dan hasil prediksi dapat dilihat
+pada Gambar
 \ref{fig:web-test}.
 
 \begin{figure}[H]
@@ -607,7 +604,7 @@ pada Tabel \ref{tab:error-samples-web}.
   \begin{tabular}{cccc}
     \toprule
     \textbf{No} & \textbf{Error} & \textbf{Kategori
-      (Threshold <
+      (Ambang Batas <
     0,007183)} & \textbf{Label Asli} \\
     \midrule
     1  & 0,006798 & Normal & Normal \\
@@ -645,9 +642,9 @@ Tabel \ref{tab:error-samples-web} menyajikan hasil pengujian
 performa model deteksi kecacatan pada 25 sampel kontainer yang
 berbeda untuk memvalidasi efektivitasnya. Keputusan klasifikasi untuk
 setiap sampel didasarkan pada perbandingan nilai \textit{error} rekonstruksi
-terhadap \textit{threshold} yang telah ditentukan sebesar
+terhadap ambang batas yang telah ditentukan sebesar
 0,007183. Sesuai dengan mekanisme ini, objek dengan nilai \textit{error} di
-bawah \textit{threshold} dikategorikan sebagai "Normal", sementara objek
+bawah ambang batas dikategorikan sebagai "Normal", sementara objek
 dengan nilai \textit{error} yang melebihinya dikategorikan sebagai "Cacat".
 Hasil pada tabel secara jelas menunjukkan bahwa untuk keseluruhan 25
 data uji, kolom "Kategori" (label prediksi dari model) sepenuhnya
@@ -657,7 +654,7 @@ berhasil diidentifikasi dengan benar sebagai "Cacat", sementara pada
 data no. 1, nilai \textit{error} yang rendah (0,006798) juga tepat
 diklasifikasikan sebagai "Normal". Kesesuaian antara
 prediksi dan kondisi sebenarnya pada seluruh rangkaian pengujian ini
-membuktikan bahwa model, dengan \textit{threshold} yang dipilih, mampu
+membuktikan bahwa model, dengan ambang batas yang dipilih, mampu
 mencapai tingkat akurasi 100\% dalam membedakan antara kontainer
 normal dan cacat. Gambar \ref{fig:web-25} menampilkan hasil \textit{website}
 setelah melakukan prediksi terhadap 25 sampel yang juga menunjukkan
