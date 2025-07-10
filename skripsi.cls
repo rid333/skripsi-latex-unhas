@@ -65,7 +65,7 @@
   bottom=2.25cm,
   left=2.25cm,
   right=2.25cm,
-  showframe
+  % showframe
 }
 
 \backgroundsetup{
