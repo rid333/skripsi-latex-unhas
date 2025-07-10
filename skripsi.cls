@@ -14,6 +14,9 @@
 \RequirePackage[round]{natbib}
 \RequirePackage{booktabs}
 \RequirePackage{chngcntr}
+\RequirePackage{needspace}
+\RequirePackage[indonesian]{babel}
+\RequirePackage{microtype}
 
 % Customizing list
 \RequirePackage{enumitem}
@@ -117,7 +120,9 @@
 \renewcommand{\theequation}{\arabic{equation}}
 
 % BIB
-\renewcommand{\bibname}{Daftar Pustaka}
+\addto\captionsindonesian{
+  \renewcommand{\bibname}{Daftar Pustaka}
+}
 \setlength{\bibhang}{2em}
 
 % Page num
@@ -136,9 +141,8 @@
 % Line space and indent
 \setstretch{1.15}
 \setlength{\parindent}{1cm}
-\hyphenpenalty=10000
-\exhyphenpenalty=10000
-\sloppy
+\widowpenalty=10000
+\clubpenalty=10000
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Redefine

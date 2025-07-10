@@ -12,14 +12,14 @@ sehingga manusia tidak perlu lagi melakukan pekerjaan yang
 berulang-ulang \citep{3}. Dalam industri manufaktur, lengan robot sering
 dipadukan dengan sensor kamera, algoritma visi komputer, dan
 teknologi otomatisasi guna mendeteksi cacat pada objek dengan tingkat
-presisi dan efisiensi yang tinggi. \par
+presisi dan efisiensi yang tinggi.
 
 Dalam konteks industri, terutama pada penanganan material berbahaya
 seperti kontainer kimia, aspek keamanan menjadi prioritas utama.
 Inspeksi visual otomatis menggunakan robot diperlukan untuk
 mengurangi risiko paparan zat berbahaya kepada manusia. Selain itu,
 isolasi dalam proses deteksi cacat pada kontainer kimia sangat
-penting, karena kerusakan atau kontaminasi pada kontainer dapat
+penting karena kerusakan atau kontaminasi pada kontainer dapat
 menimbulkan risiko keselamatan bagi konsumen. \citet{4} menyebut
 tingkat kesalahan
 inspeksi manual juga cukup tinggi, berkisar 20\% hingga 30\%.
@@ -27,35 +27,53 @@ Beberapa faktor yang menyebabkan kesalahan ini, termasuk kelelahan,
 stres, kesendirian, pencahayaan yang tidak memadai, dan kurangnya
 pengalaman. Peningkatan penggunaan robot juga meningkatkan
 produktivitas tenaga kerja sebesar 0,36\% per tahun, meningkatkan
-produktivitas total, dan menurunkan harga \textit{output} \citep{5}. \citet{7}
+produktivitas total, dan menurunkan harga \textit{output} \citep{5}. \citet{6}
 mengungkap, antara tahun 2005 dan 2011, jumlah robot per 1.000
 pekerja meningkat sebesar 25\%, yang menyebabkan penurunan 72.658
 cedera kerja per tahun. Penurunan cedera ini diperkirakan menghemat
-\$1,67 miliar (sekitar Rp27,3 triliun) per tahun, atau total \$11,69
-miliar (sekitar Rp191,2 triliun) selama periode tersebut. Oleh
+sekitar Rp27,3 triliun per tahun, atau total sekitar Rp191,2
+triliun selama periode tersebut. Oleh
 karena itu, penerapan metode otomatis yang tepat untuk mendeteksi
 cacat dan kontaminan sangat krusial guna menjamin keamanan, mencapai
 skalabilitas, dan meningkatkan efisiensi biaya.
 
-Algoritma \textit{deep learning} berupa \textit{autoencoder} dapat
-dimanfaatkan untuk mendeteksi anomali dan cacat permukaan \citep{7}.
-Model \textit{autoencoder}, khususnya \textit{convolutional autoencoder} (CAE),
-dapat dilatih hanya dengan sampel bebas cacat \citep{8}. CAE bekerja
-dengan meminimalkan kesalahan rekonstruksi sehingga fitur-fitur
-representatif dapat teridentifikasi secara optimal. Dengan melatih
-model pada data normal, setiap sampel yang mengandung cacat pada tahap
-evaluasi akan menunjukkan perbedaan yang signifikan dibandingkan
-dengan data bebas cacat yang telah dilatih \citep{9}. Pendekatan ini
-sangat berguna ketika pengumpulan data cacat terbukti sulit atau mahal. \par
+Mayoritas model deteksi cacat menggunakan metode \textit{supervised
+learning} seperti \textit{You Only Look Once} (YOLO). \citet{29}
+mengusulkan model berbasis YOLOv8 yang dilengkapi modul
+\textit{Multi-Path Convolution Attention} (MPCA) dan \textit{Partial
+Self-Attention} (PSA) untuk meningkatkan akurasi dan sensitivitas
+dalam mendeteksi cacat permukaan baja dan model ini diuji pada
+\textit{dataset} publik NEU-DET dan VOC2007. \citet{30} mengembangkan
+model YOLO untuk mendeteksi cacat pada \textit{magnet tile motor}
+kendaraan listrik secara cepat dan akurat. \citet{31} juga
+mengusulkan model YOLO yang dioptimalkan untuk mendeteksi cacat kecil
+pada pengecoran logam dengan memanfaatkan modul deteksi objek kecil,
+fitur re-ekstraksi, dan \textit{multi-scale attention}, serta diuji
+pada \textit{dataset} NEU-DET. Semua pendekatan
+tersebut menggunakan \textit{dataset} berlabel, sehingga memerlukan
+data cacat yang sudah ditandai secara manual sebagai syarat pelatihan.
 
-Berbagai studi telah memanfaatkan YOLO bersama lengan robot untuk
-beragam aplikasi. \citet{10} mengembangkan model kontrol
+Algoritma \textit{deep learning} berupa \textit{autoencoder} dapat
+dimanfaatkan untuk mendeteksi anomali dan cacat permukaan tanpa
+\textit{dataset} berlabel \citep{7}.
+Model \textit{autoencoder}, khususnya \textit{convolutional
+autoencoder} (CAE), dapat dilatih hanya dengan sampel bebas cacat
+\citep{8}. CAE bekerja dengan meminimalkan kesalahan rekonstruksi
+sehingga fitur-fitur representatif dapat teridentifikasi secara
+optimal. Model dilatih pada data normal, sehingga setiap sampel yang
+mengandung cacat pada tahap evaluasi akan menunjukkan perbedaan yang
+signifikan \citep{9}. Pendekatan ini sangat berguna ketika
+pengumpulan data cacat terbukti sulit atau mahal.
+
+YOLO telah digunakan bersama lengan robot untuk berbagai aplikasi.
+\citet{10} mengembangkan model kontrol
 lengan robot berbasis YOLO yang lebih efisien untuk menggenggam
 komponen logam secara akurat di lingkungan industri yang kompleks.
 \citet{11} mengusulkan metode deteksi objek
 parsial dan estimasi kedalaman menggunakan kombinasi YOLO dan CNN
 untuk mengontrol lengan robot, yang terbukti efektif dalam eksperimen
-pengambilan objek dengan robot 4-DOF. \citet{12} menerapkan YOLO dalam
+pengambilan objek dengan robot yang memiliki 4 derajat kebebasan.
+\citet{12} menerapkan YOLO dalam
 metode genggam robot untuk deteksi dan
 pemilahan sampah secara \textit{real-time}, dengan pendekatan pembatasan area
 pasca deteksi objek. \citet{13} mengembangkan versi
@@ -63,30 +81,33 @@ peningkatan dari YOLOv8n dengan integrasi modul \textit{dilated
 re-parameterization}, \textit{feature pyramid}, dan
 \textit{Scylla-IoU loss} untuk
 meningkatkan akurasi dan adaptabilitas lengan robot pemetik apel
-dalam kondisi kebun yang kompleks. \par
+dalam kondisi kebun yang kompleks.
 
-Sementara itu, \textit{autoencoder} adalah model jaringan saraf dalam yang
-dilatih untuk merekonstruksi data \textit{input}, dan digunakan dalam deteksi
-cacat dengan membandingkan perbedaan signifikan antara \textit{input} normal
-dan hasil rekonstruksi dari data yang mengandung cacat. \citet{14}
-menerapkan \textit{autoencoder} dengan fungsi \textit{loss} berbasis CW-SSIM
+Sementara itu, \textit{autoencoder} adalah model jaringan saraf dalam
+yang dilatih untuk merekonstruksi data \textit{input}, dan digunakan
+dalam deteksi cacat dengan membandingkan perbedaan signifikan antara
+\textit{input} normal dan hasil rekonstruksi dari data yang
+mengandung cacat. \citet{14} menerapkan \textit{autoencoder} dengan
+fungsi \textit{loss} berbasis \textit{Complex Wavelet Structural
+Similarity} (CW-SSIM)
 untuk mendeteksi anomali pada citra industri, yang terbukti lebih
 efisien dibandingkan jaringan saraf besar lainnya. \citet{15}
 mengusulkan pendekatan \textit{autoencoder} untuk mendeteksi kerusakan
 pada lengan robot industri berdasarkan sinyal suara internal, dengan
-memanfaatkan citra spektrogram STFT. \citet{16} memperkenalkan model
-deteksi anomali dengan struktur
-\textit{encoder-decoder-encoder} (EDE) dan pelatihan dua tahap, yang
+memanfaatkan citra spektrogram \textit{Short-Time Fourier Transform}
+(STFT). \citet{16} memperkenalkan model
+deteksi anomali dengan struktur \textit{encoder-decoder-encoder}
+(EDE) dan pelatihan dua tahap, yang
 menggabungkan rekonstruksi dan pendekatan konfrontasi generatif.
 \citet{17} mengembangkan FuseDecode \textit{autoencoder}, yang
 menerapkan pembelajaran bertahap mulai dari tanpa supervisi,
 semi-supervisi, hingga supervisi campuran, dan menunjukkan keunggulan
-dalam deteksi cacat pada data industri nyata serta dataset MVTec AD.
-\citet{18} membandingkan klasifikasi biner
+dalam deteksi cacat pada data industri nyata serta \textit{dataset}
+MVTec AD. \citet{18} membandingkan klasifikasi biner
 dan \textit{autoencoder} dalam deteksi anomali citra untuk proses
 perakitan rangka, khususnya pada kesalahan posisi dan rotasi komponen, dan
 menyimpulkan bahwa \textit{autoencoder} lebih unggul dalam mendeteksi anomali
-halus serta fleksibel terhadap data terbatas. \par
+halus serta fleksibel terhadap data yang terbatas.
 
 Kebutuhan untuk meningkatkan efisiensi dan keamanan dalam inspeksi
 industri mendorong pemanfaatan AI dan robotika. Deteksi cacat secara
@@ -97,10 +118,11 @@ untuk belajar dari data normal sekaligus mengidentifikasi anomali.
 Dengan demikian, penelitian ini bertujuan untuk mengeksplorasi dan
 mengoptimalkan penerapan \textit{autoencoder} dalam mendeteksi cacat
 permukaan, sehingga dapat berkontribusi pada kemajuan manufaktur yang
-cerdas dan berkelanjutan. \par
+cerdas dan berkelanjutan.
 
 \vspace{1em}
 
+\Needspace{3\baselineskip}
 \section{Tujuan Penelitian}
 Tujuan yang ingin dicapai dalam penelitian ini yaitu:
 \begin{enumerate}
@@ -108,7 +130,7 @@ Tujuan yang ingin dicapai dalam penelitian ini yaitu:
     mampu mengenali kontainer kimia secara akurat dalam berbagai kondisi.
   \item Membangun model deteksi kecacatan menggunakan algoritma
     \textit{convolutional autoencoder} yang efektif dalam membedakan antara
-    kontainer cacat dan tidak cacat.
+    kontainer cacat dan tidak.
   \item Mengintegrasikan model deteksi objek dan deteksi kecacatan ke
     dalam sistem berbasis lengan robot untuk proses identifikasi dan
     penyortiran secara otomatis.

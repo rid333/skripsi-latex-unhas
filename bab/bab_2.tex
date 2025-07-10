@@ -44,62 +44,50 @@ Tahapan penelitian secara lengkap dapat dilihat pada
 \textit{flowchart} yang tertera pada
 Gambar \ref{fig:bagan-umum}. Penelitian ini dibatasi pada perancangan
 dan pembuatan prototipe sistem deteksi cacat otomatis.
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.7\textwidth]{gambar/bagan-umum.png}
-  \caption{Bagan alir penelitian}
-  \label{fig:bagan-umum}
-\end{figure}
-\vspace{-1em}
+
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.7\textwidth]{gambar/bagan-umum.png}
+%   \caption{Bagan alir penelitian}
+%   \label{fig:bagan-umum}
+% \end{figure}
+% \vspace{-1em}
 
 \begin{figure}[H]
   \centering
   \begin{tikzpicture}[
       every node/.style={font=\fontsize{9}{11}\selectfont},
-      node distance = 0.67cm and 1cm
+      node distance = 0.77cm and 1cm
     ]
     \node (mulai) [startstop] {Mulai};
     \node (literatur) [process, below=of mulai] {Studi Literatur};
     \node (perancangan-alat) [process, below=of literatur] {Perancangan Alat};
-
-    % Split the path relative to "Perancangan Alat"
     \node (perancangan-hardware) [process, align=center, below
     left=of perancangan-alat]
     {Perancangan \\ \textit{Hardware}};
     \node (perancangan-software) [process, align=center, below
     right=of perancangan-alat]
     {Perancangan \\ \textit{Software}};
-
-    % Keep the parallel paths aligned
     \node (pembuatan-hardware) [process, align=center, below=of
     perancangan-hardware]
     {Pembuatan \\ \textit{Hardware}};
     \node (pembuatan-software) [process, align=center, below=of
     perancangan-software]
     {Pembuatan \\ \textit{Software}};
-
-    %--- Here's the first trick: create a coordinate to merge the paths ---
     \coordinate (merge1) at
     ($(pembuatan-hardware.south)!0.5!(pembuatan-software.south)$);
     \node (kalibrasi-alat) [process, align=center, below=of merge1,
-    yshift=-0.5cm] {Kalibrasi Alat}; % yshift to add a bit of space
-    % after the merge
-
-    % Split the path again
+    yshift=-0.5cm] {Kalibrasi Alat};
     \node (kalibrasi-sensor) [process, align=center, below left=of
     kalibrasi-alat]
     {Kalibrasi \\ Sensor/Lengan Robot};
     \node (kalibrasi-parameter) [process, align=center, below
     right=of kalibrasi-alat]
     {\textit{Tuning} \\ \textit{Hyperparameter}};
-
-    %--- Second trick: use another coordinate to merge again ---
     \coordinate (merge2) at
     ($(kalibrasi-sensor.south)!0.5!(kalibrasi-parameter.south)$);
     \node (pengujian-sistem) [decision, align=center, below=of
-    merge2, yshift=-0.5cm] {Pengujian Sistem};
-
-    % Final node, perfectly centered
+    merge2, yshift=-0.5cm] {Pengujian \\ Sistem};
     \node (analisis-hasil) [process, below=of pengujian-sistem]
     {Analisis Hasil};
     \node (selesai) [startstop, below=of analisis-hasil]
@@ -108,22 +96,38 @@ dan pembuatan prototipe sistem deteksi cacat otomatis.
     % Arrow
     \draw [arrow] (mulai) -- (literatur);
     \draw [arrow] (literatur) -- (perancangan-alat);
-    \draw [arrow] (perancangan-alat) -| (perancangan-hardware);
-    \draw [arrow] (perancangan-alat) -| (perancangan-software);
+
+    \draw [arrow] (perancangan-alat.west) -| (perancangan-hardware.north);
+    \draw [arrow] (perancangan-alat.east) -| (perancangan-software.north);
     \draw [arrow] (perancangan-hardware) -- (pembuatan-hardware);
     \draw [arrow] (perancangan-software) -- (pembuatan-software);
-    \draw [arrow] (pembuatan-hardware) |- (kalibrasi-alat);
-    \draw [arrow] (pembuatan-software) |- (kalibrasi-alat);
 
-    \draw (kalibrasi-alat) -- (kalibrasi-alat.south |-
-    kalibrasi-sensor.east);
-    \draw [arrow] (kalibrasi-alat.south |- kalibrasi-sensor.east) --
-    (kalibrasi-sensor);
-    \draw [arrow] (kalibrasi-alat.south |- kalibrasi-parameter.west) --
-    (kalibrasi-parameter);
+    \draw [arrow] (pembuatan-hardware.south) --
+    ($(pembuatan-hardware.south)+(0,-0.67cm)$) -| (kalibrasi-alat.north);
+    \draw [arrow] (pembuatan-software.south) --
+    ($(pembuatan-software.south)+(0,-0.67cm)$) -| (kalibrasi-alat.north);
+
+    \draw [arrow] (kalibrasi-alat.south) --
+    ($(kalibrasi-alat.south)+(0,-0.35cm)$) -| (kalibrasi-sensor.north);
+    \draw [arrow] (kalibrasi-alat.south) --
+    ($(kalibrasi-alat.south)+(0,-0.35cm)$) -| (kalibrasi-parameter.north);
+
+    \draw [arrow] (kalibrasi-sensor.south) --
+    ($(kalibrasi-sensor.south)+(0,-0.6cm)$) -| (pengujian-sistem.north);
+    \draw [arrow] (kalibrasi-parameter.south) --
+    ($(kalibrasi-parameter.south)+(0,-0.6cm)$) -| (pengujian-sistem.north);
+
+    \draw [arrow] (pengujian-sistem.west) -- node[midway,
+    yshift=0.25cm]{Tidak Bagus}
+    ($(pengujian-sistem.west)+(-4.7cm,0)$) |- (kalibrasi-alat.west);
+    \draw [arrow] (pengujian-sistem) -- node[midway, xshift=0.5cm]{Bagus}
+    (analisis-hasil);
+
+    \draw [arrow] (analisis-hasil) -- (selesai);
+
   \end{tikzpicture}
   \caption{Bagan alir penelitian}
-  \label{fig:bagan-umum-test}
+  \label{fig:bagan-umum}
 \end{figure}
 \vspace{-1em}
 
@@ -147,14 +151,14 @@ sebagai langkah awal dalam pengujian dan validasi model.
 Penelitian ini dimulai dengan tahap perancangan \textit{hardware}. Komponen
 \textit{hardware} yang digunakan meliputi kamera untuk mengambil gambar
 kontainer kimia, laptop sebagai pusat pemrosesan dan eksekusi
-algoritma pembelajaran mesin, serta \textit{motion sensor} untuk menghitung
+algoritma pembelajaran mesin, serta sensor PIR untuk menghitung
 jumlah kontainer kimia, baik yang cacat maupun yang tidak. Adapun
 rancangan hardware dapat dilihat pada Gambar \ref{fig:rangkaian}.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{gambar/rangkaian.png}
-  \caption{Bagan alir penelitian}
+  \includegraphics[width=\textwidth]{gambar/rangkaian.jpg}
+  \caption{Rangkaian \textit{hardware} sistem}
   \label{fig:rangkaian}
 \end{figure}
 \vspace{-1em}
@@ -171,11 +175,12 @@ untuk menggerakkan \textit{servo} sebagai respon terhadap kondisi kontainer.
 Lengan robot kemudian mengambil kontainer kimia dan memindahkannya ke
 wadah yang sesuai, tergantung pada hasil deteksi—apakah kontainer
 tersebut cacat atau tidak. Untuk memantau dan menghitung jumlah
-kontainer yang telah dipindahkan, dua \textit{motion sensor} dipasang pada
-masing-masing wadah (cacat dan noncacat). Data dari sensor ini
-dikirim ke \textit{web server}, yang menyediakan API untuk dikonsumsi agar
-data jumlah kontainer dapat ditampilkan ke klien secara \textit{real-time}.
-Secara keseluruhan, keterkaitan antar komponen perangkat keras dalam
+kontainer yang telah dipindahkan, dua sensor PIR dipasang pada
+masing-masing wadah (cacat dan tidak). Data dari sensor ini
+dikirim ke \textit{web server}, yang menyediakan API untuk dikonsumsi
+agar data jumlah kontainer dapat ditampilkan ke klien secara
+\textit{real-time}. Secara keseluruhan, keterkaitan antar komponen
+perangkat keras dalam
 sistem ini dapat dilihat pada Gambar \ref{fig:hardware}.
 
 \begin{figure}[H]
@@ -196,9 +201,10 @@ Kedua, digunakan CVAE sebagai model untuk
 mendeteksi cacat atau anomali visual pada kontainer. Selain itu,
 dirancang pula algoritma kontrol untuk mengatur pergerakan lengan
 robot dalam mengambil dan memindahkan kontainer berdasarkan hasil
-klasifikasi. Sistem ini juga terintegrasi dengan modul IoT untuk
-menampilkan data kontainer cacat dan non-cacat pada klien secara
-\textit{real-time} melalui \textit{website}. \par
+klasifikasi. Sistem ini juga terintegrasi dengan modul
+\textit{Internet of Things} (IoT) untuk menampilkan data kontainer
+cacat dan non-cacat
+pada klien secara \textit{real-time} melalui \textit{website}. \par
 
 Tahap perancangan model deteksi objek dimulai dengan pengumpulan
 \textit{dataset} berupa gambar kontainer kimia dari berbagai kondisi dan sudut
@@ -219,9 +225,71 @@ sistem robotik secara \textit{real-time}. \textit{Pipeline}
 perancangan model deteksi
 objek dapat dilihat pada Gambar \ref{fig:pipeline-yolo}.
 
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=\textwidth]{gambar/pipeline_yolo.png}
+%   \caption{Diagram \textit{pipeline} pelatihan model YOLO}
+%   \label{fig:pipeline-yolo}
+% \end{figure}
+% \vspace{-1em}
+
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{gambar/pipeline_yolo.png}
+  \begin{tikzpicture}[
+      every node/.style={font=\fontsize{8.5}{11}\selectfont},
+      node distance = 0.5cm and 0.5cm
+    ]
+    % --- Pipeline pertama ---
+    \node (data-latih1) [data] {Data Latih};
+    \node (anotasi1) [pipeline-box, fill=cyan!50, right=of
+    data-latih1] {Anotasi Gambar};
+    \node (gambar-label1) [pipeline-box, fill=cyan!50, above right=of
+    anotasi1] {Gambar/Label};
+    \node (bounding-box1) [pipeline-box, fill=cyan!50, below right=of
+    anotasi1] {\textit{Bounding Box}};
+    \node (preprocess1) [pipeline-box, fill=cyan!50, above right=of
+    bounding-box1] {\textit{Preprocess Data}};
+    \node (yolo1) [pipeline-box, fill=yellow!50, right=of
+    preprocess1] {Model Yolo};
+
+    % Node dummy
+    \node (start-bawah) [below=3cm of data-latih1] {};
+
+    % --- Pipeline kedua ---
+    \node (data-uji) [data, below=of start-bawah, xshift=1cm] {Data Uji};
+    \node (model-terlatih) [pipeline-box, fill=yellow!50, right=of
+    data-uji] {Model Terlatih};
+    \node (gambar-label2) [pipeline-box, fill=cyan!50, above right=of
+    model-terlatih] {Gambar/Label};
+    \node (bounding-box2) [pipeline-box, fill=cyan!50, below right=of
+    model-terlatih] {\textit{Bounding Box}};
+    \node (objek-terdeteksi) [pipeline-box, fill=green!50, above
+    right=of bounding-box2] {Objek Terdeteksi};
+
+    % Arrow
+    \draw [arrow] (data-latih1) -- (anotasi1);
+    \draw [arrow] (anotasi1.east) -- ($(anotasi1.east)+(0.25cm, 0)$)
+    |- (gambar-label1);
+    \draw [arrow] (anotasi1.east) -- ($(anotasi1.east)+(0.25cm, 0)$)
+    |- (bounding-box1);
+    \draw [arrow] (gambar-label1.east) -- ($(gambar-label1.east)+(0.20cm, 0)$)
+    |- (preprocess1);
+    \draw [arrow] (bounding-box1.east) -- ($(bounding-box1.east)+(0.20cm, 0)$)
+    |- (preprocess1);
+    \draw [arrow] (preprocess1) -- (yolo1);
+
+    \draw [arrow] (data-uji) -- (model-terlatih);
+    \draw [arrow] (model-terlatih.east) -- ($(model-terlatih.east)+(0.25cm, 0)$)
+    |- (gambar-label2);
+    \draw [arrow] (model-terlatih.east) -- ($(model-terlatih.east)+(0.25cm, 0)$)
+    |- (bounding-box2);
+    \draw [arrow] (gambar-label2.east) -- ($(gambar-label2.east)+(0.20cm, 0)$)
+    |- (objek-terdeteksi);
+    \draw [arrow] (bounding-box2.east) -- ($(bounding-box2.east)+(0.20cm, 0)$)
+    |- (objek-terdeteksi);
+
+    \draw [arrow] (yolo1.south) -- ($(yolo1.south)+(0,-1.9cm)$) -| (data-uji);
+  \end{tikzpicture}
   \caption{Diagram \textit{pipeline} pelatihan model YOLO}
   \label{fig:pipeline-yolo}
 \end{figure}
@@ -251,9 +319,60 @@ distribusi \textit{error} pada data validasi. \textit{Pipeline}
 perancangan model
 deteksi cacat dapat dilihat pada Gambar \ref{fig:pipeline-autoencoder}.
 
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=\textwidth]{gambar/pipeline_autoencoder.png}
+%   \caption{Diagram \textit{pipeline} pelatihan model deteksi cacat}
+%   \label{fig:pipeline-autoencoder}
+% \end{figure}
+% \vspace{-1em}
+
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{gambar/pipeline_autoencoder.png}
+  \begin{tikzpicture}[
+      every node/.style={font=\fontsize{8.5}{11}\selectfont},
+      node distance = 1cm and 2cm
+    ]
+    \node (data-normal) [data] {Data Normal};
+    \node (preprocess) [pipeline-box, fill=cyan!50, below=of
+    data-normal] {\textit{Preprocess Data}};
+    \node (encode) [pipeline-box, fill=yellow!50, below=of
+    preprocess] {\textit{Encode}};
+    \node (latent-space) [pipeline-box, fill=yellow!50, below=of
+    encode] {\textit{Latent Space}};
+    \node (decode) [pipeline-box, fill=yellow!50, below=of
+    latent-space] {\textit{Decode}};
+    \node (model-terlatih) [pipeline-box, fill=yellow!50, below=of
+    decode] {Model Terlatih};
+    \node (data-validasi) [data, below=of
+    model-terlatih] {Data Validasi};
+
+    \node (data-uji) [data, left=of encode] {Data Uji};
+    \node (model-terlatih2) [pipeline-box, fill=cyan!50, below=of
+    data-uji] {Model Terlatih};
+    \node (reconstruction) [pipeline-box, align=center, fill=cyan!50, below=of
+    model-terlatih2]
+    {\textit{Reconstruction} \\ \textit{Error}};
+    \node (threshold) [pipeline-box, align=center, fill=cyan!50, below=of
+    reconstruction]
+    {\textit{Reconstruction Error} \\ \textit{Threshold}};
+    \node (deteksi-cacat) [pipeline-box, fill=green!50, below=of
+    threshold] {Deteksi Cacat};
+
+    % Arrow
+    \draw [arrow] (data-normal) -- (preprocess);
+    \draw [arrow] (preprocess) -- (encode);
+    \draw [arrow] (preprocess) -- (encode);
+    \draw [arrow] (encode) -- (latent-space);
+    \draw [arrow] (latent-space) -- (decode);
+    \draw [arrow] (decode) -- (model-terlatih);
+    \draw [arrow] (data-validasi) -- (model-terlatih);
+    \draw [arrow] (data-uji) -- (model-terlatih2);
+    \draw [arrow] (model-terlatih2) -- (reconstruction);
+    \draw [arrow] (reconstruction) -- (threshold);
+    \draw [arrow] (model-terlatih) -- (threshold);
+    \draw [arrow] (threshold) -- (deteksi-cacat);
+  \end{tikzpicture}
   \caption{Diagram \textit{pipeline} pelatihan model deteksi cacat}
   \label{fig:pipeline-autoencoder}
 \end{figure}
@@ -274,9 +393,68 @@ Terakhir, informasi mengenai hasil penyortiran dikirimkan ke \textit{web
 server} untuk keperluan pemantauan. Perancangan bagan alir sistem kerja
 alat secara keseluruhan ditunjukkan pada Gambar \ref{fig:bagan-alir-kerja}.
 
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.7\textwidth]{gambar/flowchart.png}
+%   \caption{Bagan alir sistem kerja alat}
+%   \label{fig:bagan-alir-kerja}
+% \end{figure}
+% \vspace{-1em}
+
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.7\textwidth]{gambar/flowchart.png}
+
+  \begin{tikzpicture}[
+      every node/.style={font=\fontsize{9}{11}\selectfont},
+      node distance = 0.75cm and 1.5cm
+    ]
+    \node (mulai) [startstop] {Mulai};
+    \node (kamera) [input, below=of mulai] {Kamera};
+    \node (yolo) [process, below=of kamera] {YOLO};
+    \node (kontainer-terdeteksi) [decision, align=center, below=of yolo]
+    {Kontainer \\ Terdeteksi?};
+    \node (autoencoder) [process, below=of kontainer-terdeteksi]
+    {\textit{Autoencoder}};
+
+    \node (cacat-terdeteksi) [decision, align=center, below=of autoencoder]
+    {Cacat \\ Terdeteksi?};
+    \node (lengan-cacat) [process, left=of cacat-terdeteksi] {Lengan Robot};
+    \node (area-cacat) [process, below=of lengan-cacat] {Area Cacat};
+    \node (lengan-normal) [process, right=of cacat-terdeteksi] {Lengan Robot};
+    \node (area-normal) [process, below=of lengan-normal] {Area Normal};
+
+    \node (web) [process, below left=of area-normal] {\textit{Web Server}};
+    \node (klien) [process, below=of web] {Klien};
+    \node (selesai) [startstop, below=of klien] {Selesai};
+
+    % Arrow
+    \draw [arrow] (mulai) -- (kamera);
+    \draw [arrow] (kamera) -- (yolo);
+    \draw [arrow] (yolo) -- (kontainer-terdeteksi);
+
+    \draw [arrow] (kontainer-terdeteksi) -- node[midway,
+    xshift=0.3cm]{Iya} (autoencoder);
+    \draw [arrow] (kontainer-terdeteksi.west) -- node[midway,
+    yshift=0.25cm]{Tidak}
+    ($(kontainer-terdeteksi.west)+(-2cm,0)$) |- (kamera.west);
+
+    \draw [arrow] (autoencoder) -- (cacat-terdeteksi);
+    \draw [arrow] (cacat-terdeteksi.east) -- node[midway, yshift=0.25cm]{Tidak}
+    (lengan-normal);
+    \draw [arrow] (cacat-terdeteksi.west) -- node[midway,
+    yshift=0.25cm]{Iya} (lengan-cacat);
+    \draw [arrow] (lengan-cacat) -- (area-cacat);
+    \draw [arrow] (lengan-normal) -- (area-normal);
+
+    \draw [arrow] (area-cacat.south) --
+    ($(area-cacat.south)+(0,-0.4)$) -| (web.north);
+    \draw [arrow] (area-normal.south) --
+    ($(area-normal.south)+(0,-0.4)$) -| (web.north);
+
+    \draw [arrow] (web) -- (klien);
+    \draw [arrow] (klien) -- (selesai);
+
+  \end{tikzpicture}
   \caption{Bagan alir sistem kerja alat}
   \label{fig:bagan-alir-kerja}
 \end{figure}

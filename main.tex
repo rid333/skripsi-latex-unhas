@@ -9,7 +9,8 @@ ARTIFICIAL INTELLIGENCE DAN LENGAN ROBOT}
 % Flowchart boxes
 \usetikzlibrary{shapes.geometric, arrows, positioning, calc}
 
-\tikzstyle{startstop} = [rectangle, rounded corners, minimum
+% Flowchart
+\tikzstyle{startstop} = [rectangle, rounded corners=10pt, minimum
   width=3cm, minimum height=1cm,text centered, draw=black,
 , line width=1pt]
 \tikzstyle{process} = [rectangle, minimum
@@ -18,7 +19,34 @@ ARTIFICIAL INTELLIGENCE DAN LENGAN ROBOT}
 \tikzstyle{decision} = [diamond, minimum
   width=3cm, minimum height=1cm,text centered, draw=black,
 , line width=1pt]
-\tikzstyle{arrow} = [thick,->,>=stealth]
+\tikzstyle{input} = [trapezium, trapezium left angle=70, trapezium
+  right angle=110,
+  minimum width=3cm, minimum height=1cm, text centered, draw=black,
+line width=1pt]
+
+% Pipeline
+\tikzstyle{data} = [
+  cylinder,
+  shape border rotate=0,
+  aspect=0.25,
+  minimum height=2cm,
+  minimum width=1cm,
+  text centered,
+  draw=black,
+  fill=cyan!50,
+  line width=1pt
+]
+\tikzstyle{pipeline-box} = [
+  rectangle,
+  rounded corners=5pt,
+  minimum width=2cm,
+  minimum height=1cm,
+  text centered,
+  draw=black,
+  line width=1pt
+]
+
+\tikzstyle{arrow} = [rounded corners=5pt, thick,->,>=stealth]
 
 \begin{document}
 \input{halaman/sampul.tex}

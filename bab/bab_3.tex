@@ -16,7 +16,7 @@ sistem yang dirancang diilustrasikan pada Gambar \ref{fig:rancang-sistem}.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.7\textwidth]{gambar/rancang_sistem.jpg}
+  \includegraphics[width=\textwidth]{gambar/rancang_sistem.jpg}
   \caption{Hasil perancangan sistem}
   \label{fig:rancang-sistem}
 \end{figure}
@@ -99,12 +99,11 @@ tumpang tindih (\textit{overlap}) dari \textit{bounding box} hasil prediksi
 0 hingga 1 \citep{22}.
 Semakin mendekati 1, berarti prediksi semakin akurat dan sesuai
 dengan objek sebenarnya. IoU dihitung menggunakan persamaan:
-
 \begin{equation}
   IoU = \frac{|BB_{predict} \cap
   BB_{ground}|}{|BB_{predict} \cup BB_{ground}|}
 \end{equation}
-
+\indent
 \textit{Precision} mengukur proporsi prediksi positif yang benar (\textit{True
 Positive}) terhadap seluruh prediksi positif (TP + \textit{False Positive}),
 sehingga menunjukkan kemampuan model dalam meminimalkan kesalahan
@@ -113,104 +112,97 @@ rate} mengukur seberapa banyak \textit{instance} positif sebenarnya yang
 berhasil dideteksi dengan benar, sehingga menggambarkan kemampuan
 model dalam menemukan semua objek yang ada \citep{23}. \textit{Precision} dan
 \textit{recall} dapat dihitung menggunakan persamaan:
-
 \begin{equation}
   Precision = \frac{TP}{TP + FP}, \quad
   Recall = \frac{TP}{TP + FN}
 \end{equation}
-
-mAP adalah nilai rata-rata dari AP untuk semua kelas. Karena model
-YOLO yang digunakan dalam penelitian ini hanya
+Model YOLO yang digunakan dalam penelitian ini hanya
 memprediksi satu kelas yaitu kontainer kimia, maka nilai mAP setara
 dengan nilai AP. Nilai AP sendiri dihitung sebagai rata-rata
 \textit{precision} di seluruh
 rentang nilai \textit{recall} (0 hingga 1) \citep{24}, sebagaimana
 dirumuskan dalam
 Persamaan 3, di mana P adalah \textit{precision} dan r adalah \textit{recall}.
-
 \begin{equation}
   AP = \int_{0}^{1} P(r) \,dr
 \end{equation}
-
 Proses pelatihan model YOLO dilakukan menggunakan \textit{platform}
 \textit{Google
 Colaboratory}. Model dilatih secara iteratif selama 50 \textit{epoch} dengan
 \textit{batch size} 16 dan \textit{optimizer} Adam, agar model dapat mempelajari
 fitur-fitur dari data latih secara optimal. Hasil pelatihan model
 YOLO setiap 10 \textit{epoch} dapat dilihat pada Tabel \ref{tab:yolo-train}.
-
 \begin{table}[H]
   \caption{Proses \textit{training} model YOLO}
   \label{tab:yolo-train}
   \vspace{-1em}
   \centering
-  \footnotesize
+  \small
   \begin{tabular}{c p{1.5cm} p{1.5cm} p{1.5cm} p{1.5cm} p{1.5cm} p{1.5cm}}
     \toprule
     \textbf{Epoch} & \textbf{Train/Box Loss} & \textbf{Train/Class Loss}
     & \textbf{Train/DFL Loss} & \textbf{Val/Box Loss}
     & \textbf{Val/Class Loss} & \textbf{Val/DFL Loss} \\
     \midrule
-    0 & 0.59460 & 1.93744 & 0.97064 & 0.47086 & 2.50286 & 0.89899 \\
-    10 & 0.43332 & 0.43561 & 0.87133 & 0.30517 & 0.37575 & 0.82624 \\
-    20 & 0.32857 & 0.29349 & 0.85098 & 0.33417 & 0.21048 & 0.84483 \\
-    30 & 0.28212 & 0.23284 & 0.83904 & 0.24181 & 0.15662 & 0.82436 \\
-    40 & 0.22672 & 0.17762 & 0.80096 & 0.22091 & 0.13860 & 0.82009 \\
-    50 & 0.20164 & 0.15458 & 0.79927 & 0.20030 & 0.11625 & 0.81561 \\
+    0  & 0,5946 & 1,9374 & 0,9706 & 0,4709 & 2,5029 & 0,8990 \\
+    10 & 0,4333 & 0,4356 & 0,8713 & 0,3052 & 0,3758 & 0,8262 \\
+    20 & 0,3286 & 0,2935 & 0,8510 & 0,3342 & 0,2105 & 0,8448 \\
+    30 & 0,2821 & 0,2328 & 0,8390 & 0,2418 & 0,1566 & 0,8244 \\
+    40 & 0,2267 & 0,1776 & 0,8010 & 0,2209 & 0,1386 & 0,8201 \\
+    50 & 0,2016 & 0,1546 & 0,7993 & 0,2003 & 0,1163 & 0,8156 \\
     \bottomrule
   \end{tabular}
   \normalsize
 \end{table}
-
 Pada proses \textit{training}, nilai \textit{loss} pada data
-\textit{train} dan validasi secara
-umum menunjukkan tren penurunan seiring bertambahnya \textit{epoch}. Penurunan
-ini menunjukkan bahwa model semakin mampu menyesuaikan parameter
-internalnya dengan data yang diberikan. Dengan demikian, model
-menjadi lebih baik dalam mempelajari pola yang relevan untuk
-mendeteksi kontaier.
+\textit{train} dan validasi secara umum menunjukkan tren penurunan
+seiring bertambahnya \textit{epoch}. Penurunan ini menunjukkan bahwa
+model semakin mampu menyesuaikan parameter internalnya dengan data
+yang diberikan. Dengan demikian, model menjadi lebih baik dalam
+mempelajari pola yang relevan untuk mendeteksi kontaier.
 
-Pada \textit{Train/Box Loss}, terjadi penurunan signifikan dari 0.59460 pada
-\textit{epoch} ke-0 menjadi 0.20164 pada \textit{epoch} ke-50, yang
-mengindikasikan
-peningkatan kemampuan model dalam memprediksi posisi \textit{bounding box}
-secara lebih akurat. Hal serupa juga terlihat pada \textit{Train/Class Loss},
-yang turun drastis dari 1.93744 menjadi 0.15458, menandakan model
-semakin tepat dalam melakukan klasifikasi objek. Sementara itu,
-\textit{Train/DFL Loss (Distribution Focal Loss)} menurun dari 0.97064 menjadi
-0.79927, yang berarti model semakin baik dalam memperbaiki distribusi
-prediksi \textit{bounding box}. Pada data validasi, \textit{Val/Box
-Loss} menurun dari
-0.47086 ke 0.20030, \textit{Val/Class Loss} dari 2.50286 ke 0.11625, serta
-\textit{Val/DFL Loss} dari 0.89899 ke 0.81561. Penurunan yang konsisten pada
-semua komponen \textit{loss} validasi menunjukkan bahwa model tidak hanya
-mampu belajar dengan baik pada data \textit{train}, tetapi juga memiliki
-kemampuan generalisasi yang baik terhadap data yang belum pernah
-dilihat sebelumnya.
+Pada \textit{Train/Box Loss}, terjadi penurunan signifikan dari
+0,5946 pada \textit{epoch} ke-0 menjadi 0,2016 pada \textit{epoch}
+ke-50, yang mengindikasikan peningkatan kemampuan model dalam
+memprediksi posisi \textit{bounding box} secara lebih akurat. Hal
+serupa juga terlihat pada \textit{Train/Class Loss}, yang turun
+drastis dari 1,9374 menjadi 0,1546, menandakan model semakin tepat
+dalam melakukan klasifikasi objek. Sementara itu, \textit{Train/DFL
+Loss (Distribution Focal Loss)} menurun dari 0,9706 menjadi 0,7993,
+yang berarti model semakin baik dalam memperbaiki distribusi prediksi
+\textit{bounding box}. Pada data validasi, \textit{Val/Box Loss}
+menurun dari 0,4709 ke 0,2003, \textit{Val/Class Loss} dari 2,5029
+ke 0,1163, serta \textit{Val/DFL Loss} dari 0,89890 ke 0,8156.
+Penurunan yang konsisten pada semua komponen \textit{loss} validasi
+menunjukkan bahwa model tidak hanya mampu belajar dengan baik pada
+data \textit{train}, tetapi juga memiliki kemampuan generalisasi yang
+baik terhadap data yang belum pernah dilihat sebelumnya.
 
-Namun, evaluasi kinerja model tidak bisa hanya mengandalkan nilai
-loss. Perlu digunakan metrik tambahan seperti mAP  untuk menilai
-akurasi deteksi dan kualitas prediksi \textit{bounding box} secarah
-menyeluruh. Pada penelitian ini digunakan mAP@50 (IoU \textit{threshold} 50\%)
-untuk mengukur keberhasilan deteksi secara lebih longgar, serta
-mAP@95 (rata-rata mAP dari IoU \textit{threshold} 50\% hingga 95\% dengan
-interval 5\%) untuk menilai ketepatan prediksi \textit{bounding box} secara
-lebih ketat dan detail. Hasil pengukuran mAP pada tiap \textit{epoch} dapat
+Namun, penilaian kinerja model tidak dapat semata-mata bergantung
+pada nilai \textit{loss}. Diperlukan metrik tambahan seperti mAP
+untuk mengevaluasi akurasi deteksi serta kualitas prediksi
+\textit{bounding box} secara keseluruhan. Pada penelitian ini
+digunakan mAP@50 (IoU \textit{threshold} 50\%) untuk mengukur
+keberhasilan deteksi secara lebih longgar, serta mAP@95 (rata-rata
+mAP dari IoU \textit{threshold} 50\% hingga 95\% dengan interval 5\%)
+untuk menilai ketepatan prediksi \textit{bounding box} secara lebih
+ketat dan detail. Hasil pengukuran mAP pada tiap \textit{epoch} dapat
 dilihat pada Gambar \ref{fig:map}.
 
 \begin{figure}[H]
   \centering
   % First image
-  \begin{minipage}[t]{0.48\textwidth}
+  \begin{minipage}[]{\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{gambar/map50.png}
+    \includegraphics[width=0.8\textwidth]{gambar/map50.png}
     (a)
   \end{minipage}
-  \hfill
+  \vspace{1em}
+
   % Second image
-  \begin{minipage}[t]{0.48\textwidth}
+  \begin{minipage}{\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{gambar/map5090.png}
+    \includegraphics[width=0.8\textwidth]{gambar/map5090.png}
     (b)
   \end{minipage}
   \caption{Grafik tren mAP: (a) mAP@50, (b) mAP@50-90}
@@ -223,7 +215,7 @@ menggunakan metrik mAP seiring berjalannya
 50 \textit{epoch} pelatihan. Grafik di sebelah kiri, mAP@50, yang menggunakan
 ambang batas IoU longgar (50\%), menunjukkan bahwa model dengan
 sangat cepat mencapai performa puncak. Terlihat bahwa nilainya
-melonjak mendekati 1.00 hanya dalam 10-15 \textit{epoch} pertama lalu
+melonjak mendekati 1,00 hanya dalam 10-15 \textit{epoch} pertama lalu
 cenderung datar, menandakan model mampu mempelajari cara mendeteksi
 keberadaan objek secara umum dengan sangat cepat. Sebaliknya, grafik
 di sebelah kanan, mAP@50-95, yang mengukur performa pada rentang
@@ -240,7 +232,7 @@ dapat dilihat pada Gambar \ref{fig:yolo-validasi}.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.7\textwidth]{gambar/yolo_validasi.jpg}
+  \includegraphics[width=0.93\textwidth]{gambar/yolo_validasi.jpg}
   \caption{Hasil prediksi YOLO pada data validasi}
   \label{fig:yolo-validasi}
 \end{figure}
@@ -269,7 +261,7 @@ penelitian ini dapat dilihat pada Gambar \ref{fig:arsitektur-autoencoder}.
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{gambar/arsitektur_autoencoder.png}
-  \caption{Hasil prediksi YOLO pada data validasi}
+  \caption{Arsitektur \textit{variational autoencoder}}
   \label{fig:arsitektur-autoencoder}
 \end{figure}
 \vspace{-1em}
@@ -278,13 +270,13 @@ Arsitektur VAE yang diimplementasikan pada penelitian ini dirancang
 untuk memproses citra berukuran 128 $\times$ 128 dengan tiga kanal
 warna (RGB). Bagian \textit{encoder} menggunakan lima lapis
 \textit{convolutional} berurutan, masing-masing diikuti fungsi
-aktivasi ReLU, untuk secara progresif mengekstrak dan menurunkan
+aktivasi ReLU, untuk mengekstrak dan menurunkan
 resolusi fitur spasial, hingga menghasilkan representasi akhir
 berukuran (512, 4, 4). Representasi ini kemudian diproyeksikan
 menjadi dua vektor, yaitu vektor
 \textit{mean} dan vektor \textit{log-varians}, yang mendefinisikan
 distribusi Gaussian
-multivariat sebagai ruang laten. Setelah sampling vektor laten $z$,
+multivariat sebagai ruang laten. Setelah \textit{sampling} vektor laten $z$,
 \textit{decoder} memproyeksikan kembali $z$ ke dimensi spasial melalui lapisan
 linear dan serangkaian lapisan \textit{transpose convolutional}
 (dekonvolusi) yang secara bertahap memperbesar resolusi hingga
@@ -311,8 +303,8 @@ Contoh salah satu data dapat dilihat pada Gambar \ref{fig:ae-data}.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{gambar/ae_data.png}
-  \caption{Hasil prediksi YOLO pada data validasi}
+  \includegraphics[width=\textwidth]{gambar/ae_data.png}
+  \caption{Salah satu data latih model \textit{autoencoder}}
   \label{fig:ae-data}
 \end{figure}
 \vspace{-1em}
@@ -346,9 +338,8 @@ Kullback-Leibler (KL) \textit{divergence} antara distribusi posterior
 aproksimasi $q_\phi(z|x)$ dan distribusi prior $p_\theta(z)$.
 Komponen ini berfungsi sebagai penalti, supaya distribusi yang
 dihasilkan \textit{encoder} tetap mendekati distribusi prior sederhana
-seperti distribusi Gaussian \citep{26}. Secara matematis, fungsi \textit{loss}
+seperti distribusi Gaussian \citep{26}. Fungsi \textit{loss}
 VAE dapat ditulis sebagai:
-
 \begin{equation}
   \mathcal{L}(\theta, \phi; x) = \mathbb{E}{q\phi(z|x)}[\log
   p_\theta(x|z)] - D_{KL}(q_\phi(z|x) \parallel p_\theta(z))
@@ -365,7 +356,7 @@ optimal. Hasil pelatihan model YOLO setiap 10 \textit{epoch} dapat dilihat
 pada Tabel \ref{tab:training-autoencoder}.
 
 \begin{table}[H]
-  \caption{Proses training model model \textit{convolutional
+  \caption{Proses \textit{training} model model \textit{convolutional
   variational autoencoder} (CVAE)}
   \label{tab:training-autoencoder}
   \vspace{-1em}
@@ -374,21 +365,20 @@ pada Tabel \ref{tab:training-autoencoder}.
     \toprule
     \textbf{Epoch} & \textbf{Loss} \\
     \midrule
-    1 & 837.7615 \\
-    10 & 30.5440 \\
-    20 & 22.6941 \\
-    30 & 18.5220 \\
-    40 & 15.0172 \\
-    50 & 11.9098 \\
-    60 & 9.8593 \\
-    70 & 8.7772 \\
-    80 & 7.3923 \\
-    90 & 7.1070 \\
-    100 & 6.8338 \\
+    1 & 837,7615 \\
+    10 & 30,5440 \\
+    20 & 22,6941 \\
+    30 & 18,5220 \\
+    40 & 15,0172 \\
+    50 & 11,9098 \\
+    60 & 9,8593 \\
+    70 & 8,7772 \\
+    80 & 7,3923 \\
+    90 & 7,1070 \\
+    100 & 6,8338 \\
     \bottomrule
   \end{tabular}
 \end{table}
-
 Pada proses \textit{training}, nilai \textit{loss} rekonstruksi
 secara umum menunjukkan tren penurunan seiring bertambahnya
 \textit{epoch}. Penurunan ini mengindikasikan bahwa model \textit{autoencoder}
@@ -402,7 +392,7 @@ pada Gambar \ref{fig:autoencoder-test}.
 \begin{figure}[H]
   \centering
   % First image
-  \begin{minipage}{0.8\textwidth}
+  \begin{minipage}{\textwidth}
     \centering
     \includegraphics[width=\textwidth]{gambar/kontainer_bagus.jpeg}
     (a)
@@ -410,20 +400,21 @@ pada Gambar \ref{fig:autoencoder-test}.
   \vspace{1em}
 
   % Second image
-  \begin{minipage}{0.8\textwidth}
+  \begin{minipage}{\textwidth}
     \centering
     \includegraphics[width=\textwidth]{gambar/kontainer_cacat.jpeg}
     (b)
   \end{minipage}
-  \caption{Hasil prediksi kecacatan: (a) Kontainer normal, (b) kontainer cacat}
+  \caption{Hasil prediksi kecacatan: (a) Kontainer normal, (b)
+  kontainer cacat}
   \label{fig:autoencoder-test}
   \vspace{-1em}
 \end{figure}
 
 Gambar di atas menunjukkan rekonstruksi \textit{error} model
 \textit{autoencoder} pada kontainer normal dan cacat. Pada kontainer
-normal, \textit{error} yang diperoleh adalah 0.006447 sedangkan pada
-kontainer cacat sebesar 0.007566. Dari hasil tersebut terlihat
+normal, \textit{error} yang diperoleh adalah 0,006447 sedangkan pada
+kontainer cacat sebesar 0,007566. Dari hasil tersebut terlihat
 \textit{error} pada kontainer cacat lebih besar dibandingkan
 \textit{error} pada kontainer normal. Hal ini menunjukkan bahwa model
 sudah dapat membedakan kontainer normal dan cacat.
@@ -464,68 +455,71 @@ tersebut dirangkum pada Tabel \ref{tab:error-samples}.
     \toprule
     \textbf{Index} & \textbf{Error} & \textbf{Kategori} \\
     \midrule
-    1  & 0.006737 & Normal \\
-    2  & 0.006828 & Normal \\
-    3  & 0.007091 & Normal \\
-    4  & 0.006997 & Normal \\
-    5  & 0.006610 & Normal \\
-    6  & 0.006795 & Normal \\
-    7  & 0.006872 & Normal \\
-    8  & 0.006725 & Normal \\
-    9  & 0.006873 & Normal \\
-    10 & 0.006817 & Normal \\
-    11 & 0.007432 & Cacat \\
-    12 & 0.007455 & Cacat \\
-    13 & 0.008369 & Cacat \\
-    14 & 0.007183 & Cacat \\
-    15 & 0.007653 & Cacat \\
-    16 & 0.008856 & Cacat \\
-    17 & 0.007531 & Cacat \\
-    18 & 0.007624 & Cacat \\
-    19 & 0.007457 & Cacat \\
-    20 & 0.008424 & Cacat \\
+    1  & 0,006737 & Normal \\
+    2  & 0,006828 & Normal \\
+    3  & 0,007091 & Normal \\
+    4  & 0,006997 & Normal \\
+    5  & 0,006610 & Normal \\
+    6  & 0,006795 & Normal \\
+    7  & 0,006872 & Normal \\
+    8  & 0,006725 & Normal \\
+    9  & 0,006873 & Normal \\
+    10 & 0,006817 & Normal \\
+    11 & 0,007432 & Cacat \\
+    12 & 0,007455 & Cacat \\
+    13 & 0,008369 & Cacat \\
+    14 & 0,007183 & Cacat \\
+    15 & 0,007653 & Cacat \\
+    16 & 0,008856 & Cacat \\
+    17 & 0,007531 & Cacat \\
+    18 & 0,007624 & Cacat \\
+    19 & 0,007457 & Cacat \\
+    20 & 0,008424 & Cacat \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Tabel \ref{tab:error-samples} menunjukkan nilai \textit{error} atau selisih
-rekonstruksi pada masing-masing sampel
-gambar, yang terdiri dari 10 kontainer normal dan 10 kontainer cacat.
-Terlihat bahwa sampel dengan kategori normal memiliki nilai error
-yang relatif kecil dan cukup seragam di sekitar 0.0067, menandakan
-model mampu merekonstruksi dengan baik. Sebaliknya, sampel dengan
-kategori cacat cenderung memiliki error lebih tinggi, menunjukkan
-adanya perbedaan yang signifikan pada area cacat yang gagal
-direkonstruksi dengan sempurna, sehingga mempermudah deteksi anomali.
+Tabel \ref{tab:error-samples} menyajikan nilai \textit{error} atau
+selisih rekonstruksi pada masing-masing sampel gambar, yang terdiri
+dari 10 kontainer normal dan 10 kontainer cacat. Terlihat bahwa
+sampel kategori normal memiliki nilai \textit{error} yang relatif
+kecil dan cukup seragam, rata-rata sekitar 0,0067. Hal ini
+menunjukkan bahwa model mampu merekonstruksi kontainer normal dengan
+baik. Sebaliknya, sampel kategori cacat memperlihatkan nilai
+\textit{error} yang cenderung lebih tinggi. Nilai \textit{error} yang
+besar ini mengindikasikan adanya perbedaan signifikan pada area
+cacat, yang gagal direkonstruksi secara sempurna oleh model, sehingga
+mempermudah proses deteksi anomali.
+
+\begin{equation}
+  J = \textit{True Positive Rate} - \textit{False Positive Rate}
+\end{equation}
 
 Kurva \textit{Receiver Operating Characteristic} (ROC) digunakan
 sebagai metode analisis untuk mengevaluasi performa model deteksi
 cacat pada kontainer kimia dalam penelitian ini. Kurva ROC dibuat
 dengan memplot nilai 1 - \textit{specificity} (\textit{false positive
 rate}) pada sumbu-x dan \textit{recall} (\textit{true positive rate})
-pada sumbu-y untuk setiap
-nilai (\textit{threshold}) yang diuji. \textit{Specificity} sendiri adalah
-ukuran seberapa baik model dalam mengenali data negatif secara benar. Nilai
-\textit{threshold} terbaiki ditentukan dengan memaksimalkan statistik
-Youden J \citep{28}. Kurva ROC dapat dilihat pada Gambar
-\ref{fig:roc}. Persamaan
-statistik Youden J dituliskan sebagai berikut:
-\begin{equation}
-  J = \textit{True Positive Rate} - \textit{False Positive Rate}
-\end{equation}
+pada sumbu-y untuk setiap nilai (\textit{threshold}) yang diuji.
+\textit{Specificity} sendiri adalah ukuran seberapa baik model dalam
+mengenali data negatif secara benar. Nilai \textit{threshold}
+terbaiki ditentukan dengan memaksimalkan statistik Youden J, yang
+dirumuskan pada Persamaan 6
+\citep{28}. Kurva ROC yang menggambarkan kinerja model secara
+menyeluruh dapat dilihat pada Gambar \ref{fig:roc}.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[]{gambar/roc.png}
+  \includegraphics[width=\textwidth]{gambar/roc.png}
   \caption{Kurva ROC}
   \label{fig:roc}
 \end{figure}
 \vspace{-1em}
 
 Kurva di atas menunjukkan performa model dalam membedakan kontainer
-cacat dan tidak cacat dengan sangat baik, ditunjukkan oleh garis biru
+cacat dan tidak dengan sangat baik, ditunjukkan oleh garis biru
 yang mendekati titik sudut kiri atas. Berdasarkan perhitungan,
-\textit{threshold} optimal yang diperoleh adalah sebesar 0.007183, ditandai
+\textit{threshold} optimal yang diperoleh adalah sebesar 0,007183, ditandai
 dengan lingkaran merah pada grafik. Nilai ini digunakan sebagai batas
 deteksi akhir, sehingga model dapat memaksimalkan sensitivitas
 sekaligus meminimalkan kesalahan positif dalam identifikasi cacat.
@@ -546,16 +540,17 @@ robot ketika sedang menyortir objek yang teridentifikasi cacat.
 \begin{figure}[H]
   \centering
   % First image
-  \begin{minipage}[t]{0.48\textwidth}
+  \begin{minipage}{\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{gambar/robot_normal.jpeg}
+    \includegraphics[width=0.88\textwidth]{gambar/robot_normal.jpeg}\\
     (a)
   \end{minipage}
-  \hfill
+  \vspace{1em}
+
   % Second image
-  \begin{minipage}[t]{0.48\textwidth}
+  \begin{minipage}{\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{gambar/robot_cacat.jpeg}
+    \includegraphics[width=0.88\textwidth]{gambar/robot_cacat.jpeg}\\
     (b)
   \end{minipage}
   \caption{Lengan robot menyortir kontainer: (a) normal, (b) cacat}
@@ -578,7 +573,7 @@ Tampilan website dan hasil prediksi dapat dilihat pada Gambar
 \begin{figure}[H]
   \centering
   % First image
-  \begin{minipage}{0.8\textwidth}
+  \begin{minipage}{\textwidth}
     \centering
     \includegraphics[width=\textwidth]{gambar/web_ss_normal.png}
     (a)
@@ -586,7 +581,7 @@ Tampilan website dan hasil prediksi dapat dilihat pada Gambar
   \vspace{1em}
 
   % Second image
-  \begin{minipage}{0.8\textwidth}
+  \begin{minipage}{\textwidth}
     \centering
     \includegraphics[width=\textwidth]{gambar/web_ss_cacat.png}
     (b)
@@ -613,33 +608,33 @@ pada Tabel \ref{tab:error-samples-web}.
     \toprule
     \textbf{No} & \textbf{Error} & \textbf{Kategori
       (Threshold <
-    0.007183)} & \textbf{Label Asli} \\
+    0,007183)} & \textbf{Label Asli} \\
     \midrule
-    1  & 0.006798 & Normal & Normal \\
-    2  & 0.008298 & Cacat & Cacat \\
-    3  & 0.006854 & Normal & Normal \\
-    4  & 0.007066 & Normal & Normal \\
-    5  & 0.006923 & Normal & Normal \\
-    6  & 0.007607 & Cacat & Cacat \\
-    7  & 0.007261 & Cacat & Cacat \\
-    8  & 0.007393 & Cacat & Cacat \\
-    9  & 0.006842 & Normal & Normal \\
-    10 & 0.008099 & Cacat & Cacat \\
-    11 & 0.006945 & Normal & Normal \\
-    12 & 0.007381 & Cacat & Cacat \\
-    13 & 0.006722 & Normal & Normal \\
-    14 & 0.006865 & Normal & Normal \\
-    15 & 0.007397 & Cacat & Cacat \\
-    16 & 0.007099 & Normal & Normal \\
-    17 & 0.006790 & Normal & Normal \\
-    18 & 0.006760 & Normal & Normal \\
-    19 & 0.007383 & Cacat & Cacat \\
-    20 & 0.007693 & Cacat & Cacat \\
-    21 & 0.008071 & Cacat & Cacat \\
-    22 & 0.007977 & Cacat & Cacat \\
-    23 & 0.006885 & Normal & Normal \\
-    24 & 0.008007 & Cacat & Cacat \\
-    25 & 0.006847 & Normal & Normal \\
+    1  & 0,006798 & Normal & Normal \\
+    2  & 0,008298 & Cacat & Cacat \\
+    3  & 0,006854 & Normal & Normal \\
+    4  & 0,007066 & Normal & Normal \\
+    5  & 0,006923 & Normal & Normal \\
+    6  & 0,007607 & Cacat & Cacat \\
+    7  & 0,007261 & Cacat & Cacat \\
+    8  & 0,007393 & Cacat & Cacat \\
+    9  & 0,006842 & Normal & Normal \\
+    10 & 0,008099 & Cacat & Cacat \\
+    11 & 0,006945 & Normal & Normal \\
+    12 & 0,007381 & Cacat & Cacat \\
+    13 & 0,006722 & Normal & Normal \\
+    14 & 0,006865 & Normal & Normal \\
+    15 & 0,007397 & Cacat & Cacat \\
+    16 & 0,007099 & Normal & Normal \\
+    17 & 0,006790 & Normal & Normal \\
+    18 & 0,006760 & Normal & Normal \\
+    19 & 0,007383 & Cacat & Cacat \\
+    20 & 0,007693 & Cacat & Cacat \\
+    21 & 0,008071 & Cacat & Cacat \\
+    22 & 0,007977 & Cacat & Cacat \\
+    23 & 0,006885 & Normal & Normal \\
+    24 & 0,008007 & Cacat & Cacat \\
+    25 & 0,006847 & Normal & Normal \\
     \midrule
     \multicolumn{3}{r}{\textbf{Tingkat Akurasi}} & \textbf{100\%} \\
     \bottomrule
@@ -651,15 +646,15 @@ performa model deteksi kecacatan pada 25 sampel kontainer yang
 berbeda untuk memvalidasi efektivitasnya. Keputusan klasifikasi untuk
 setiap sampel didasarkan pada perbandingan nilai \textit{error} rekonstruksi
 terhadap \textit{threshold} yang telah ditentukan sebesar
-0.007183. Sesuai dengan mekanisme ini, objek dengan nilai \textit{error} di
+0,007183. Sesuai dengan mekanisme ini, objek dengan nilai \textit{error} di
 bawah \textit{threshold} dikategorikan sebagai "Normal", sementara objek
 dengan nilai \textit{error} yang melebihinya dikategorikan sebagai "Cacat".
 Hasil pada tabel secara jelas menunjukkan bahwa untuk keseluruhan 25
 data uji, kolom "Kategori" (label prediksi dari model) sepenuhnya
 konsisten dengan kolom "Label Asli" (\textit{ground truth}). Sebagai
-contoh, pada data no. 2, nilai \textit{error} yang tinggi (0.008298)
+contoh, pada data no. 2, nilai \textit{error} yang tinggi (0,008298)
 berhasil diidentifikasi dengan benar sebagai "Cacat", sementara pada
-data no. 1, nilai \textit{error} yang rendah (0.006798) juga tepat
+data no. 1, nilai \textit{error} yang rendah (0,006798) juga tepat
 diklasifikasikan sebagai "Normal". Kesesuaian antara
 prediksi dan kondisi sebenarnya pada seluruh rangkaian pengujian ini
 membuktikan bahwa model, dengan \textit{threshold} yang dipilih, mampu
@@ -670,7 +665,7 @@ hasil yang sama dengan Tabel \ref{tab:error-samples-web}.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.7\textwidth]{gambar/ss_web_25.png}
+  \includegraphics[width=\textwidth]{gambar/ss_web_25.png}
   \caption{Hasil prediksi kecacatan pada 25 sampel}
   \label{fig:web-25}
 \end{figure}
