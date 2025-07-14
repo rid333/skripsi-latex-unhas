@@ -4,17 +4,17 @@
 \addcontentsline{toc}{chapter}{ABSTRAK}
 
 \noindent
-Alridho. \textbf{JUDUL BAHASA INDONESIA} (dibimbing oleh Prof. Dr. Arifin, M.T.). \par
+Alridho. \textbf{PROTOTIPE SISTEM DETEKSI DAN PENANGANAN CACAT PADA KONTAINER KIMIA UNTUK AREA INDUSTRI-TERISOLASI BERBASIS ARTIFICIAL INTELLIGENCE DAN LENGAN ROBOT} (dibimbing oleh Prof. Dr. Arifin, M.T.). \par
 
 \vspace*{0.1cm}
 
 \noindent
-\textbf{Latar Belakang}. Inspeksi manual pada kontainer kimia di industri memiliki tingkat kesalahan yang tinggi, berkisar antara 20\% hingga 30\%, dan menimbulkan risiko paparan zat berbahaya bagi pekerja. \textit{Artificial Intelligence} (AI) dan robotika dapat meningkatkan efisiensi, keamanan, dan produktivitas. Model deteksi cacat seperti \textit{autoencoder} sangat efektif karena mampu belajar dari data normal untuk mengidentifikasi anomali, yang sangat berguna ketika data cacat sulit diperoleh. \textbf{Tujuan}. Penelitian ini bertujuan untuk (1) merancang model deteksi objek berbasis YOLO untuk mengenali kontainer kimia secara akurat, (2) membangun model deteksi kecacatan menggunakan algoritma convolutional autoencoder (CVAE) yang efektif, dan (3) mengintegrasikan kedua model tersebut ke dalam sistem lengan robot untuk identifikasi dan penyortiran otomatis. \textbf{Metode}. Penelitian ini menggunakan pendekatan eksperimental dengan merancang prototipe yang terdiri dari perangkat keras dan lunak. Perangkat keras utama meliputi lengan robot, Arduino Uno, motor servo, sensor PIR, dan kamera. Prosesnya dimulai saat kamera menangkap citra kontainer. Model YOLO kemudian mendeteksi objek kontainer dari citra tersebut. Selanjutnya, model CVAE menganalisis citra untuk menentukan ada atau tidaknya cacat dengan menghitung \textit{reconstruction error}. Berdasarkan hasil analisis, lengan robot secara otomatis menyortir kontainer ke area "cacat" atau "normal". Ambang batas untuk penentuan cacat ditetapkan sebesar 0,007183 melalui analisis kurva ROC. \textbf{Hasil}. Hasil penelitian menunjukkan model deteksi objek YOLO berhasil dilatih dengan performa sangat tinggi, di mana nilai mAP@50 mendekati 1.00. Model deteksi kecacatan CVAE, setelah dilatih, mampu membedakan kontainer cacat dan normal secara efektif. Pengujian sistem secara menyeluruh sebanyak 25 kali pada sampel uji menunjukkan bahwa prototipe mampu mengklasifikasikan dan menyortir kontainer dengan tingkat akurasi 100\%. Seluruh proses, termasuk jumlah kontainer yang diinspeksi dan tingkat kecacatan, berhasil ditampilkan secara \textit{real-time} melalui berbasis \textit{web}. \textbf{Kesimpulan}. Prototipe sistem inspeksi visual cerdas ini berhasil mendemonstrasikan kelayakannya untuk otomasi penuh di lingkungan industri terisolasi. Sistem ini berhasil menggabungkan model deteksi objek YOLO yang akurat, model deteksi kecacatan CVAE yang efektif dengan akurasi 100\% pada data uji, serta sistem penyortiran fisik menggunakan lengan robot secara terintegrasi dan otomatis. \par 
+\textbf{Latar Belakang}. Inspeksi manual kontainer kimia memiliki tingkat kesalahan tinggi (20\%–30\%) dan berisiko bagi pekerja. \textit{Artificial Intelligence} (AI) dan robotika dapat meningkatkan efisiensi dan keselamatan. Model deteksi cacat berbasis \textit{autoencoder} efektif karena bisa belajar dari data normal untuk mendeteksi anomali, sangat membantu saat data cacat terbatas. \textbf{Tujuan}. Penelitian ini bertujuan: (1) merancang model deteksi objek berbasis YOLO untuk mengenali kontainer, (2) membangun model deteksi cacat menggunakan CVAE, dan (3) mengintegrasikan keduanya dalam sistem lengan robot untuk identifikasi dan penyortiran otomatis. \textbf{Metode}. Penelitian menggunakan pendekatan eksperimental dengan prototipe yang terdiri dari lengan robot, Arduino Uno, motor \textit{servo}, sensor PIR, dan kamera. Kamera menangkap citra kontainer yang kemudian dideteksi YOLO. CVAE menganalisis cacat berdasarkan \textit{reconstruction error}, dengan ambang 0{,}007183 (dari kurva ROC). Lengan robot lalu menyortir kontainer ke area "cacat" atau "normal". \textbf{Hasil}. Model YOLO mencapai mAP@50 dan mAP@50-95 mendekati 1.00. Model CVAE berhasil membedakan kontainer cacat dan normal. Pengujian 25 kali menunjukkan akurasi 100\%, dan seluruh proses ditampilkan \textit{real-time} berbasis web. \textbf{Kesimpulan}. Prototipe ini berhasil mendemonstrasikan otomasi penuh inspeksi visual di lingkungan industri, dengan akurasi tinggi dan sistem penyortiran robotik yang terintegrasi. \par
 
 \vspace*{0.1cm}
 
 \noindent
-\textbf{Kata Kunci:} Deteksi cacat; prototipe; lengan robot; YOLO; autoencoder; IoT.
+\textbf{Kata Kunci:} \textit{Deteksi cacat; prototipe; lengan robot; YOLO; autoencoder; IoT.}
 
 \endgroup
 
@@ -26,17 +26,17 @@ Alridho. \textbf{JUDUL BAHASA INDONESIA} (dibimbing oleh Prof. Dr. Arifin, M.T.)
 \addcontentsline{toc}{chapter}{ABSTRACT}
 
 \noindent
-Alridho. \textbf{JUDUL BAHASA INGRRIS} (dibimbing oleh Prof. Dr. Arifin, M.T.). \par
+Alridho. \textbf{ AI-DRIVEN PROTOTYPE FOR DEFECT DETECTION AND HANDLING OF CHEMICAL CONTAINERS IN ISOLATED INDUSTRIAL ENVIRONMENTS WITH A ROBOTIC ARM} (dibimbing oleh Prof. Dr. Arifin, M.T.). \par
 
 \vspace*{0.1cm}
  
 \noindent
-\lipsum[1]
+\textbf{Background}. Manual inspection of chemical containers has a high error rate (20\%–30\%) and poses risks to workers. Artificial Intelligence (AI) and robotics can improve efficiency and safety. Defect detection models based on autoencoders are effective since they can learn from normal data to detect anomalies, which is very useful when defective data are limited. \textbf{Objective}. This study aims to: (1) design an object detection model based on YOLO to accurately recognize containers, (2) develop a defect detection model using CVAE, and (3) integrate both models into a robotic arm system for automatic identification and sorting. \textbf{Method}. The research uses an experimental approach with a prototype consisting of a robotic arm, Arduino Uno, servo motors, PIR sensor, and camera. The camera captures images of the containers, which are then detected by YOLO. The CVAE analyzes defects based on reconstruction error, with a threshold of 0.007183 (from the ROC curve). The robotic arm then sorts the containers into "defect" or "normal" areas. \textbf{Results}. The YOLO model achieved mAP@50 and mAP@50-95 close to 1.00. The CVAE model successfully distinguished defective and normal containers. Testing conducted 25 times showed 100\% accuracy, and the entire process was displayed in real-time via a web-based interface. \textbf{Conclusion}. This prototype successfully demonstrated full automation of visual inspection in an industrial environment, with high accuracy and an integrated robotic sorting system.
 
 
 \vspace*{0.1cm}
 
 \noindent
-\textbf{Kata Kunci:} Prototipe; monitoring; IoT; sensor; telegram.
+\textbf{Keywords:} \textit{Defect detection; prototype; robotic arm; YOLO; autoencoder; IoT}.
 
 \endgroup

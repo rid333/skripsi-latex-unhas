@@ -1,56 +1,51 @@
 \chapter{KESIMPULAN}
 \section{Kesimpulan}
-Berdasarkan hasil perancangan, analisis, dan implementasi alat yang
-telah digunakan, maka dapat diambil kesimpulan sebagai berikut:
+Berdasarkan hasil perancangan, pengujian, dan implementasi sistem
+diperoleh esimpulan sebagai berikut:
 \begin{enumerate}
-  \item Model deteksi objek berbasis YOLO telah berhasil dirancang dan
-    dilatih untuk mengenali kontainer kimia dengan akurasi dan
-    presisi lokalisasi yang sangat tinggi. Kinerja model, yang
-    dievaluasi menggunakan metrik \textit{mean Average Precision} (mAP),
-    menunjukkan kemampuan yang sangat bagus dalam mendeteksi
-    keberadaan objek dan menentukan \textit{bounding box} secara akurat.
-  \item Model deteksi kecacatan menggunakan algoritma (CVAE) terbukti
-    efektif dalam mengidentifikasi anomali visual pada permukaan
-    kontainer. Model
-    dilatih pada \textit{dataset} citra normal (tanpa cacat). Hasilnya, model
-    mampu merekonstruksi citra normal dengan \textit{reconstruction
-    error} yang rendah. Sebaliknya, kontainer cacat menghasilkan \textit{error}
-    yang signifikan lebih tinggi. Penentuan ambang batas optimal sebesar
-    0,007183 dilakukan melalui analisis kurva ROC. Ambang batas ini
-    mampu mencapai tingkat akurasi 100\% pada 25 sampel uji.
-  \item Sistem ini mampu menjalankan alur kerja otomasi secara
-    menyeluruh: mulai dari akuisisi citra oleh kamera, identifikasi
-    objek oleh YOLO, analisis kecacatan oleh CVAE, hingga penyortiran
-    fisik kontainer oleh lengan robot ke area yang telah ditentukan
-    (cacat atau normal). Dengan demikian, penelitian ini berhasil
-    mendemonstrasikan kelayakan sebuah sistem inspeksi visual cerdas
-    dan otomatis untuk penanganan kontainer di lingkungan industri terisolasi.
+  \item Model deteksi objek berbasis YOLO telah berhasil dirancang
+    dan dilatih untuk mengenali kontainer kimia dengan akurasi dan
+    presisi lokalisasi yang tinggi. Evaluasi menggunakan metrik mAP,
+    menunjukkan performa yang sangat baik
+    dalam mendeteksi objek dan menentukan posisi \textit{bounding
+    box} secara akurat.
+  \item Model deteksi kecacatan berbasis CVAE terbukti efektif dalam
+    mengidentifikasi anomali visual pada permukaan kontainer. Model
+    dilatih hanya pada citra kontainer tanpa cacat dan berhasil
+    merekonstruksi citra normal dengan tingkat error rendah.
+    Sementara itu, kontainer cacat menghasilkan error rekonstruksi
+    yang signifikan lebih tinggi. Ambang batas optimal sebesar
+    0,007183 ditentukan melalui analisis kurva ROC dan menghasilkan
+    akurasi 100\% pada 25 samepl uji.
+  \item Sistem yang dirancang berhasil mengintegrasikan seluruh
+    proses secara otomatis: mulai dari akuisisi citra oleh kamera,
+    deteksi objek oleh YOLO, dan klasifikasi cacat oleh CVAE, hingga
+    penyortiran fisik kontainer menggunakan lengan robot. Hal ini
+    membuktikan kelayakan sistem inspeksi visual cerdas untuk
+    aplikasi industri teris
 \end{enumerate}
 
 \vspace{1em}
 
 \section{Saran}
-Alat yang telah dibuat memiliki potensi untuk dikembangkan lebih
-lanjut. Berikut adalah beberapa saran untuk penelitian selanjutnya:
+Sistem yang telah dibangun masih memiliki ruang untuk pengembangan
+lebih lanjut. Beberapa saran untuk penelitian selanjutnya antara lain:
 \begin{enumerate}
-  \item Penelitian selanjutnya disarankan mencoba pendekatan
-    \textit{supervised learning}, seperti \textit{convolutional
-    neural network} (CNN)
-    atau YOLO yang diadaptasi untuk klasifikasi cacat. Dengan adanya
-    label pada data cacat, model diharapkan dapat mengenali berbagai
-    jenis kerusakan secara lebih spesifik dan meningkatkan akurasi
-    deteksi pada kondisi industri nyata.
-  \item Kontrol pergerakan lengan robot pada prototipe ini masih
-    bersifat \textit{hard-coded}, dengan sudut \textit{servo} yang ditentukan
-    sebelumnya. Untuk meningkatkan fleksibilitas, disarankan
-    menggunakan \textit{inverse kinematics}, sehingga lengan dapat secara
-    dinamis menghitung sudut sendi untuk mencapai koordinat target
-    (x, y, z). Dengan demikian, sistem mampu beradaptasi \textit{real-time}
-    terhadap perubahan posisi objek tanpa perlu pemrograman ulang manual.
-  \item Prototipe ini memanfaatkan satu kamera dengan sudut pandang
-    tunggal untuk akuisisi citra. Keterbatasan ini menyebabkan
-    inspeksi hanya dapat dilakukan pada permukaan yang terlihat oleh
-    kamera, sehingga potensi adanya cacat di sisi lain kontainer akan
-    terlewatkan. Untuk mengatasi hal ini, penelitian selanjutnya
-    dapat berfokus pada pengembangan sistem inspeksi 360 derajat.
+  \item Menerapkan pendekatan \textit{supervised learning} seperti
+    CNN atau varian YOLO untuk klasiifikasi cacat, model dapat
+    dikembangkan untuk mengenali berbagai tipe kerusakan secara
+    spesifik sehingga meningkatkan akurasi deteksi dilingkungan industri nyata.
+  \item Meningkatkan fleksibilitas gerakan lengan robot dengan
+    mengganti kontrol \textit{hard-coded} menjadi pendekatan berbasis
+    \textit{inverse kinematics}. Dengan metode ini, sudut
+    \textit{servo} dapat dihitung secara dinamis berdasarkan
+    koordinat target (x, y, z), memungkinkan
+    sistem beradaptasi secara \textit{real-time} terhadap posisi
+    objek tanpa pemrograman ulang.
+  \item Mengembangkan sistem akuisis citra 360 derajat. Prototipe
+    saat ini hanya menggunakan 1 kamera dengan sudut pandang tetap,
+    yang menyebabkan bagian permukaan kontainer tertentu tidak
+    terjangkau. Penambahan kamera atau sistem rotasi objek dapat
+    memungkinkan inspeksi menyeluruh terhadap seluruh permukaan
+    kontainer, sehingga mendeteksi cacat tersembunyi secara lebih efektif
 \end{enumerate}
