@@ -17,6 +17,8 @@
 \RequirePackage{needspace}
 \RequirePackage[indonesian]{babel}
 \RequirePackage{microtype}
+\RequirePackage{array}
+\RequirePackage{longtable}
 
 % Customizing list
 \RequirePackage{enumitem}
@@ -77,7 +79,11 @@
 }
 % --- TOC & Chapter Formatting ---
 \addto\captionsindonesian{
+  \renewcommand\listfigurename{\vspace*{-3cm}}
+  \renewcommand\listtablename{\vspace*{-3cm}}
   \renewcommand\contentsname{\vspace*{-3cm}}
+  \renewcommand{\thefigure}{\arabic{figure}}
+  \renewcommand{\thetable}{\arabic{table}}
 }
 \renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
 

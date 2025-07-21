@@ -2,7 +2,7 @@
 
 \newcommand{\JudulSkripsi}{PROTOTIPE SISTEM DETEKSI DAN PENANGANAN
   CACAT PADA KONTAINER KIMIA UNTUK AREA INDUSTRI-TERISOLASI BERBASIS
-ARTIFICIAL INTELLIGENCE DAN LENGAN ROBOT}
+ARTIFICIAL INTELLIGENCE (AI) DAN LENGAN ROBOT}
 \newcommand{\NamaPenulis}{ALRIDHO}
 \newcommand{\NIM}{H021211006}
 
@@ -60,8 +60,47 @@ line width=1pt]
 \newpage
 \chapter*{DAFTAR ISI}
 \noindent\hfill\textbf{Halaman}
-\addcontentsline{toc}{chapter}{DAFTAR IS}
+\addcontentsline{toc}{chapter}{DAFTAR ISI}
 \tableofcontents
+
+\newpage
+\chapter*{DAFTAR TABEL}
+\noindent\hfill\textbf{Halaman}
+\addcontentsline{toc}{chapter}{DAFTAR TABEL}
+\listoftables
+
+\newpage
+\chapter*{DAFTAR GAMBAR}
+\noindent\hfill\textbf{Halaman}
+\addcontentsline{toc}{chapter}{DAFTAR GAMBAR}
+\listoffigures
+
+\newpage
+\chapter*{DAFTAR LAMPIRAN}
+\noindent\hfill\textbf{Halaman}
+\addcontentsline{toc}{chapter}{DAFTAR LAMPIRAN}
+\begin{spacing}{1}
+  \begin{itemize}
+      \setlength{\itemsep}{1pt}
+      \renewcommand\labelitemi{}
+    \item \makebox[12cm][l]{\textbf{Lampiran 1.} Peralatan penelitian \dotfill}
+      \pageref{Lampiran 1}
+    \item \makebox[12cm][l]{\textbf{Lampiran 2.} Program untuk latih
+      model YOLO \dotfill}
+      \pageref{Lampiran 2}
+    \item \makebox[12cm][l]{\textbf{Lampiran 3.} Program untuk latih
+      model autoencoder \dotfill}
+      \pageref{Lampiran 3}
+    \item \makebox[12cm][l]{\textbf{Lampiran 4.} Program kombinasi YOLO
+      dan autoencoder \dotfill}
+      \pageref{Lampiran 4}
+    \item \makebox[12cm][l]{\textbf{Lampiran 5.} Program lengan robot \dotfill}
+      \pageref{Lampiran 5}
+    \item \makebox[12cm][l]{\textbf{Lampiran 6.} Dokumentasi pergerakan
+      lengan robot \dotfill}
+      \pageref{Lampiran 6}
+  \end{itemize}
+\end{spacing}
 
 \input{bab/bab_1.tex}
 \input{bab/bab_2.tex}

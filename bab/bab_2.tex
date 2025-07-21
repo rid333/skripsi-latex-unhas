@@ -116,9 +116,9 @@ perancangan dan pembuatan prototipe sistem deteksi cacat secara otomatis.
     ($(kalibrasi-parameter.south)+(0,-0.6cm)$) -| (pengujian-sistem.north);
 
     \draw [arrow] (pengujian-sistem.west) -- node[midway,
-    yshift=0.25cm]{Tidak Bagus}
+    yshift=0.25cm]{Tidak}
     ($(pengujian-sistem.west)+(-4.7cm,0)$) |- (kalibrasi-alat.west);
-    \draw [arrow] (pengujian-sistem) -- node[midway, xshift=0.5cm]{Bagus}
+    \draw [arrow] (pengujian-sistem) -- node[midway, xshift=0.5cm]{Ya}
     (analisis-hasil);
 
     \draw [arrow] (analisis-hasil) -- (selesai);
