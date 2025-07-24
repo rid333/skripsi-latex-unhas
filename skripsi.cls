@@ -10,7 +10,7 @@
 \RequirePackage{etoolbox}
 \RequirePackage{tocloft}
 \RequirePackage{float}
-\RequirePackage[labelfont=bf, labelsep=period]{caption}
+\RequirePackage[labelfont=bf, labelsep=period, figurewithin=none]{caption}
 \RequirePackage[round]{natbib}
 \RequirePackage{booktabs}
 \RequirePackage{chngcntr}
@@ -19,6 +19,7 @@
 \RequirePackage{microtype}
 \RequirePackage{array}
 \RequirePackage{longtable}
+\RequirePackage{listings}
 
 % Customizing list
 \RequirePackage{enumitem}
@@ -59,7 +60,8 @@
 % Arial font
 \RequirePackage{fontspec}
 \setmainfont{Arial}
-\RequirePackage{mathastext}
+\RequirePackage{unicode-math}
+\DeclareMathAlphabet{\mathupright}{OT1}{cmr}{m}{n}
 
 % Margin
 \geometry{
@@ -103,8 +105,6 @@
   }
 }
 \makeatother
-\renewcommand{\cftchapfont}{\normalfont}
-\renewcommand{\cftchappagefont}{\normalfont}
 \renewcommand{\cftchappresnum}{BAB }
 % Space between BAB [num] and text
 \setlength{\cftchapnumwidth}{3.8em}
@@ -115,14 +115,23 @@
 \pretocmd{\tableofcontents}{\begingroup\setstretch{1}}{}{}
 \apptocmd{\tableofcontents}{\endgroup}{}{}
 
+\captionsetup{justification=centering}
+
 % Gambar caption
 \renewcommand{\figurename}{Gambar}
 \renewcommand{\thefigure}{\arabic{figure}}
 \counterwithout{figure}{chapter}
+\setlength{\cftbeforefigskip}{0pt}
+\renewcommand{\cftfigpresnum}{\bfseries Gambar }
+\renewcommand{\cftfigaftersnum}{\textbf{.}}
+\setlength{\cftfignumwidth}{6em}
 
 % Table caption
 \counterwithout{table}{section}
 \renewcommand{\tablename}{Tabel}
+\renewcommand{\cfttabpresnum}{\bfseries Tabel }
+\renewcommand{\cfttabaftersnum}{\textbf{.}}
+\setlength{\cfttabnumwidth}{4em}
 
 % Equation numbering
 \renewcommand{\theequation}{\arabic{equation}}
@@ -151,6 +160,35 @@
 \setlength{\parindent}{1cm}
 \widowpenalty=10000
 \clubpenalty=10000
+
+% listings
+\lstset{
+  basicstyle=\ttfamily % This is the magic line!
+}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+  commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=left,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2
+}
+
+\lstset{style=mystyle}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Redefine

@@ -1,9 +1,10 @@
 \chapter{HASIL DAN PEMBAHASAN}
 \section{Hasil Perancangan Sistem}
+\noindent
 Sistem deteksi kecacatan kontainer yang dikembangkan pada penelitian
 ini dirancang untuk bekerja secara otomatis dengan menggunakan kamera
 sebagai sensor utama dan lengan robot sebagai aktuator. Proses
-diawali oleh model YOLO yang mendeteksi keberadaan kontainer dari
+diawali oleh model YOLOv12 yang mendeteksi keberadaan kontainer dari
 citra hasil tangkapan kamera. Jika objek kontainer berhasil
 terdeteksi, citra tersebut dianalisis oleh model \textit{autoencoder}
 untuk mengklasifikasikan apakah kontainer mengalami kecacatan.
@@ -26,8 +27,9 @@ diilustrasikan pada Gambar \ref{fig:rancang-sistem}.
 
 \vspace{1em}
 
-\section{Hasil Perancangan Model YOLO}
+\section{Hasil Perancangan Model YOLOv12}
 \subsection{\textit{Dataset} dan \textit{Preprocessing}}
+\noindent
 Tahap awal penelitian adalah pengumpulan data primer berupa citra
 kontainer kimia menggunakan kamera. Proses akuisisi ini dilakukan
 untuk membangun  sebuah \textit{dataset} kustom yang mampu merepresentasikan
@@ -41,14 +43,15 @@ disajikan pada Tabel \ref{tab:pembagian-dataset}.
 \begin{table}[H]
   \caption{Distribusi pembagian \textit{dataset}}
   \label{tab:pembagian-dataset}
-  \vspace{-1em}
   \centering
-  \begin{tabular}{ccc}
+  % Added @{\hspace{1.5cm}} to put 1.5cm of space between columns
+  \begin{tabular}{c@{\hspace{1.5cm}}c@{\hspace{1.5cm}}c}
     \toprule
     \textbf{Kategori} & \textbf{Jumlah Gambar} & \textbf{Persentase} \\
     \midrule
     Data Latih & 395 & 85,3\% \\
     Data Validasi & 68 & 14,7\% \\
+    \midrule
     Total Data & 463 & 100\% \\
     \bottomrule
   \end{tabular}
@@ -56,7 +59,7 @@ disajikan pada Tabel \ref{tab:pembagian-dataset}.
 
 Setelah akuisisi data, dilakukan anotasi citra untuk
 memberikan \textit{bounding box} dan label kelas pada setiap objek yang
-terdeteksi di dalam citra. Proses ini penting karena arsitektur YOLO
+terdeteksi di dalam citra. Proses ini penting karena arsitektur YOLOv12
 dirancang untuk secara simultan memprediksi letak objek dan kelasnya,
 sehingga memerlukan data berlabel \citep{19,20}. Sebanyak 463 citra
 kontainer telah dianotasi secara manual. Contoh hasil anotasi dapat
@@ -65,7 +68,7 @@ dilihat pada Gambar \ref{fig:yolo-anotasi}.
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.7\textwidth]{gambar/anotasi.png}
-  \caption{Salah satu data \textit{train} dengan labelnya}
+  \caption{Salah satu data latih dengan labelnya}
   \label{fig:yolo-anotasi}
 \end{figure}
 \vspace{-1em}
@@ -73,10 +76,11 @@ dilihat pada Gambar \ref{fig:yolo-anotasi}.
 \vspace{1em}
 
 \subsection{Hasil Pelatihan Model}
+\noindent
 Dalam penelitian ini, metrik utama yang digunakan untuk mengevaluasi
-performa model YOLO adalah mAP. Metrik ini penting untuk menilai
+performa model YOLOv12 adalah mAP. Metrik ini penting untuk menilai
 seberapa akurat model dalam mendeteksi objek
-seingga lengan robot dapat melakukan penyortiran secara tepat. Nilai
+sehingga lengan robot dapat melakukan penyortiran secara tepat. Nilai
 mAP dihitung berdasarkan rata-rata \textit{Average Precision} (AP), yang
 merupakan gabungan antara \textit{precision} dan \textit{recall}
 untuk setiap kelas \citep{21}.
@@ -88,7 +92,7 @@ Positive}) atau salah (\textit{False Positive}), digunakan metrik
 \textit{bounding box} sebenarnya ($BB_{ground}$), dengan nilai
 mendekati 1 menunjukkan prediksi yang sangat akurat \citep{22}.
 Semakin mendekati 1, berarti prediksi semakin akurat dan sesuai
-dengan objek sebenarnya. IoU dihitung menggunakan persamaan:
+dengan objek sebenarnya. IoU dihitung menggunakan Persamaan 1:
 \begin{equation}
   IoU = \frac{|BB_{predict} \cap
   BB_{ground}|}{|BB_{predict} \cup BB_{ground}|}
@@ -99,13 +103,13 @@ yang benar (\textit{True Positive}) terhadap seluruh prediksi positif
 (TP + \textit{False Positive}), sedangkan \textit{recall} atau
 \textit{true positive rate} mengukur seberapa banyak objek yang
 benar-bernar terdeteksi \citep{23}. \textit{Precision} dan
-\textit{recall} dapat dihitung menggunakan persamaan:
+\textit{recall} dapat dihitung menggunakan Persamaan 2:
 \begin{equation}
   Precision = \frac{TP}{TP + FP}, \quad
   Recall = \frac{TP}{TP + FN}
 \end{equation}
 \indent
-Karena model YOLO dalam penelitian ini hanya memprediksi satu kelas
+Karena model YOLOv12 dalam penelitian ini hanya memprediksi satu kelas
 yaitu kontainer kimia, maka nilai mAP setara dengan nilai AP. Nilai
 AP dihitung sebagai rata-rata \textit{precision} di seluruh rentang nilai
 \textit{recall} (0 hingga 1) \citep{24}, sebagaimana dirumuskan dalam
@@ -114,17 +118,17 @@ Persamaan 3, di mana P adalah \textit{precision} dan r adalah \textit{recall}.
   AP = \int_{0}^{1} P(r) \,dr
 \end{equation}
 \indent
-Proses pelatihan model YOLO dilakukan di platform \textit{Google
+Proses pelatihan model YOLOv12 dilakukan di platform \textit{Google
 Colaboratory} selama 50 \textit{epoch} menggunakan \textit{batch
 size} 16 dan \textit{optimizer} Adam. Ringkasan hasil pelatihan
 setiap 10 \textit{epoch} disajikan pada Tabel \ref{tab:yolo-train}.
 \begin{table}[H]
-  \caption{Proses \textit{training} model YOLO}
+  \caption{Proses pelatihan model YOLOv12}
   \label{tab:yolo-train}
   \vspace{-1em}
   \centering
   \small
-  \begin{tabular}{c p{1.5cm} p{1.5cm} p{1.5cm} p{1.5cm} p{1.5cm} p{1.5cm}}
+  \begin{tabular}{c *{6}{>{\centering\arraybackslash}p{1.5cm}}}
     \toprule
     \textbf{Epoch} & \textbf{Train/Box Loss} & \textbf{Train/Class Loss}
     & \textbf{Train/DFL Loss} & \textbf{Val/Box Loss}
@@ -183,20 +187,20 @@ tiap \textit{epoch} dapat dilihat pada Gambar \ref{fig:map}.
 \end{figure}
 
 Grafik (a) menunjukkan bahwa model dengan cepat mencapai nilai mAP
-tinggi pada ambang 50\%, bahkan dalam 10-15 \textit{epoch} pertama.
+tinggi pada ambang 50\%, bahkan dalam 10 hingga 15 \textit{epoch} pertama.
 Grafik (b) menunjukkan tren yang lebih lambat dan bertahap,
 mengindikasikan proses penyempurnaan presisi dan akurasi posisi
 \textit{bounding box}. Secara keseluruhan, nilai mAP yang tinggi pada
 kedua metrik diakhir
 pelatihan menunjukkan bahwa model yang dihasilkan tidak hanya mampu
 mendeteksi objek, tetapi juga mampu menentukan batas objek secara akurat.
-Contoh hasil prediksi model YOLO terhadap data validasi disajikan
+Contoh hasil prediksi model YOLOv12 terhadap data validasi disajikan
 pada Gambar \ref{fig:yolo-validasi}.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.93\textwidth]{gambar/yolo_validasi.jpg}
-  \caption{Hasil prediksi YOLO pada data validasi}
+  \includegraphics[width=0.90\textwidth]{gambar/yolo_validasi.jpg}
+  \caption{Hasil prediksi YOLOv12 pada data validasi}
   \label{fig:yolo-validasi}
 \end{figure}
 \vspace{-1em}
@@ -204,7 +208,8 @@ pada Gambar \ref{fig:yolo-validasi}.
 \vspace{1em}
 
 \section{Hasil Perancangan Model Deteksi Kecacatan}
-\subsection{Arsitektur Variational Autoencoder}
+\subsection{Arsitektur \textit{Variational Autoencoder}}
+\noindent
 \textit{Variational autoencoder} (VAE) merupakan pengembangan dari
 \textit{autoencoder}, yaitu arsitektur \textit{neural network}
 yang berfungsi untuk mengekstraksi fitur laten dari data. Perbedaan
@@ -252,13 +257,14 @@ diinterpretasikan sebagai citra valid.
 \vspace{1em}
 
 \subsection{\textit{Dataset} dan \textit{Preprocessing}}
+\noindent
 Tahap ini diawali dengan pengumpulan data primer berupa citra
 kontainer kimia menggunakan kamera. Tujuannya adalah membangun
 \textit{dataset} kustom yang dapat merepresentasikan objek target secara
 spesifik. Total citra mentah yang berhasil dikumpulkan berjumlah 3005
 citra, yang seluruhnya digunakan sebagai data latih. Sebelum
 digunakan untuk pelatihan \textit{autoencoder}, seluruh citra diproses
-terlebih dahulu menggunakan model YOLO untuk mendeteksi serta
+terlebih dahulu menggunakan model YOLOv12 untuk mendeteksi serta
 memotong (\textit{cropping}) area kontainer secara
 otomatis. Hal ini bertujuan agar hanya bagian penting dari kontainer
 yang diproses lebih lanjut, sehingga model \textit{autoencoder} dapat
@@ -286,6 +292,7 @@ menjadi dasar untuk mendeteksi anomali.
 \vspace{1em}
 
 \subsection{Hasil Pelatihan Model}
+\noindent
 Fungsi \textit{loss} pada VAE didasarkan pada prinsip
 \textit{Evidence Lower Bound}
 (ELBO) yang bertujuan mengoptimalkan model probabilistik dengan
@@ -295,12 +302,14 @@ secara langsung. Fungsi \textit{loss} VAE terdiri dari dua komponen utama: (1)
 citra hasil rekonstruksi dari vektor laten z, dan (2) \textit{regularization
 term} berupa divergensi Kullback-Leibler (KL) yang mengukur sejauh
 mana distribusi posterior hasil \textit{encoder} menyimpang dari distribusi
-Gaussian standar \citep{26}. Fungsi \textit{loss} VAE dirumuskan
-sebagai berikut:
+Gaussian standar \citep{26}. Fungsi \textit{loss} VAE ditunjukkan
+pada Persamaan 4:
 \begin{equation}
-  \mathcal{L}(\theta, \phi; x) = \mathbb{E}{q\phi(z|x)}[\log
-  p_\theta(x|z)] - D_{KL}(q_\phi(z|x) \parallel p_\theta(z))
+  \mathcal{L}(\theta, \phi; x) =
+  \mathbb{E}_{q_\phi(z|x)}[\mathupright{log}\ p_\theta(x|z)] -
+  D_{KL}(q_\phi(z|x) \parallel p_\theta(z))
 \end{equation}
+
 \indent
 Model CVAE dilatih
 menggunakan komputer dengan GPU NVIDIA GeForce RTX 3050 8GB VRAM
@@ -311,12 +320,12 @@ dan \textit{optimizer} Adam. Nilai \textit{loss} setiap 10
 \textit{epoch} ditampilkan pada Tabel \ref{tab:training-autoencoder}.
 
 \begin{table}[H]
-  \caption{Proses \textit{training} model model \textit{convolutional
+  \caption{Proses pelatihan model \textit{convolutional
   variational autoencoder}}
   \label{tab:training-autoencoder}
   \vspace{-1em}
   \centering
-  \begin{tabular}{cc}
+  \begin{tabular}{c@{\hspace{1.5cm}}c}
     \toprule
     \textbf{Epoch} & \textbf{Loss} \\
     \midrule
@@ -367,7 +376,7 @@ Dari gambar di atas, diketahui bahwa nilai rekonstruksi
 \textit{error} untuk kontainer
 normal adalah 0,006447, sedangkan untuk kontainer cacat sebesar
 0,007566. Selisih ini menunjukkan bahwa model mampu membedakan citra
-cacat dari normal normal berdasarkan tingkat kesalahan rekonstruksi.
+cacat dari normal berdasarkan tingkat kesalahan rekonstruksi.
 
 \vspace{1em}
 
@@ -384,7 +393,7 @@ MSE menghitung rata-rata selisih kuadrat antara piksel citra asli
 (\textit{output}). Semakin
 kecil nilai MSE, semakin mirip citra hasil rekonstruksi dengan citra
 aslinya, yang berarti model berhasil meminimalkan distorsi
-\citep{27}. MSE dirumuskan sebagai berikut:
+\citep{27}. MSE ditunjukkan pada Persamaan 5:
 
 \begin{equation}
   MSE = \frac{1}{n} \sum_{i=1}^{n} (x_i - \hat{x}_i)^2
@@ -400,7 +409,7 @@ pada Tabel \ref{tab:error-samples}.
   \centering
   \caption{Nilai \textit{error} untuk setiap sampel}
   \label{tab:error-samples}
-  \begin{tabular}{ccc}
+  \begin{tabular}{c@{\hspace{2cm}}c@{\hspace{2cm}}c}
     \toprule
     \textbf{No} & \textbf{Error} & \textbf{Kategori} \\
     \midrule
@@ -432,12 +441,12 @@ Dari tabel di atas, nilai MSE untuk kontainer normal berkisar 0,0067
 sedangkan nilai untuk kontainer cacat secara konsisten lebih tinggi.
 Hal ini menunjukkan bahwa perbedaan rekonstruksi pada citra cacat
 lebih besar, menandakan kegagalan model untuk merekonstruksi fitur
-yang tidak dikenalnya. Untuk mnentukan ambang batas optimal,
+yang tidak dikenalnya. Untuk menentukan ambang batas optimal,
 digunakan metode \textit{Receiver Operating Characteristic} (ROC)
 yang memplot \textit{true positive rate} (recall) terhadap
 \textit{false positive rate} (1 – \textit{specificity}) \citep{28}.
 Nilai ambang terbaik ditentukan dengan memaksimalkan statistik Youden
-J yang dirumuskan sebagai:
+J yang ditunjukkan pada Persamaan 6:
 
 \begin{equation}
   J = \textit{True Positive Rate} - \textit{False Positive Rate}
@@ -456,7 +465,7 @@ pada Persamaan 6.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{gambar/roc.png}
+  \includegraphics[width=0.7\textwidth]{gambar/roc.png}
   \caption{Kurva ROC}
   \label{fig:roc}
 \end{figure}
@@ -474,14 +483,14 @@ meminimalkan kesalahan deteksi positif.
 \vspace{1em}
 
 \section{Hasil Pengujian Sistem Lengan Robot}
-
+\noindent
 Setelah model deteksi terlatih dan nilai ambang batas optimal
 ditentukan, tahap selanjutnya adalah integrasi sistem dengan lengan
 robot yang dikendalikan oleh mikrokontroler Arduino. Berdasarkan
 hasil klasifikasi dari model, lengan robot  akan secara otomatis
 memindahkan kontainer kimia. Jika objek teridentifikasi sebagai
 cacat, maka lengan robot akan mengarahkan ke sisi kiri, sedangkan
-jika dinyatakan normal akan diarahkan ke sisi kanan . Gambar
+jika dinyatakan normal akan diarahkan ke sisi kanan. Gambar
 \ref{fig:robot-only} mengilustrasikan aksi lengan robot
 ketika sedang menyortir objek yang teridentifikasi normal dan cacat.
 
@@ -533,7 +542,6 @@ dapat dilihat pada Gambar \ref{fig:web-test}.
     \includegraphics[width=\textwidth]{gambar/web_ss_cacat.png}
     (b)
   \end{minipage}
-  \centering
   \caption{Tampilan hasil prediksi melalui \textit{website}: (a)
   kontainer normal, (b) kontainer cacat}
   \label{fig:web-test}
@@ -591,9 +599,9 @@ rekonstruksi dengan ambang batas 0,007183. Sampel dengan \textit{error} lebih
 rendah dikategorikan sebagai “Normal”, sedangkan yang lebih tinggi
 dikategorikan sebagai “Cacat”. Dari Tabel 5 terlihat bahwa seluruh
 prediksi model sesuai dengan kondisi sebenarnya (label asli),
-menghasilkan tingkat akurasi 100\%. Contohnya, sampel no. 2 memiliki
+menghasilkan tingkat akurasi 100\%. Contohnya, sampel nomor 2 memiliki
 nilai \textit{error} yang tinggi (0,008298) terklarifikasi dengan benar
-”Cacat”. Sebaliknya sampel no. 1, dengan \textit{error} yang rendah
+”Cacat”. Sebaliknya sampel nomor 1, dengan \textit{error} yang rendah
 (0,006798) teklarifikasi dengan benar sebagai ”Normal”. Hasil
 prediksi akhir pada \textit{website} ditunjukkan pada Gambar
 \ref{fig:web-25}.

@@ -1,6 +1,7 @@
 \chapter{METODE PENELITIAN}
 \section{Tempat dan Waktu Penelitian}
-Penelitian ini dilaksanakan dari bulan Februari 2025 hingga Juni
+\noindent
+Penelitian ini dilaksanakan dari bulan Februari hingga Juni
 2025, bertempat di Laboratorium Elektronika dan Instrumentasi,
 Departemen Fisika, Fakultas Matematika dan Ilmu Pengetahuan Alam,
 Universitas Hasanuddin, Makassar.
@@ -8,6 +9,7 @@ Universitas Hasanuddin, Makassar.
 \vspace{1em}
 
 \section{Peralatan Penelitian}
+\noindent
 Peralatan yang digunakan pada penelitian ini adalah sebagai berikut:
 \begin{enumerate}
   \item Arduino Uno. berfungsi sebagai mikrokontroler utama yang
@@ -24,10 +26,10 @@ Peralatan yang digunakan pada penelitian ini adalah sebagai berikut:
     digunakan untuk mendeteksi pergerakan dan membantu
     menghitung jumlah kontainer cacat dan maupun tidak cacat yang melintas.
   \item Kamera, digunakan untuk mengambil citra kontainer kimia, yang
-    akan diproses oleh model deteksi objek (YOLO) dan deteksi kecacatan
+    akan diproses oleh model deteksi objek (YOLOv12) dan deteksi kecacatan
     (\textit{autoencoder}).
   \item Laptop/komputer, digunakan untuk memuat program ke Arduino
-    Uno, serta menjalankan model deteksi objek berbasis YOLO dan
+    Uno, serta menjalankan model deteksi objek berbasis YOLOv12 dan
     \textit{autoencoder} untuk analisis visual.
   \item Kabel \textit{jumper}, berfungsi menghubungkan berbagai komponen
     elektronik seperti sensor dan aktuator ke papan rangkaian dan
@@ -39,6 +41,7 @@ Peralatan yang digunakan pada penelitian ini adalah sebagai berikut:
 \vspace{1em}
 
 \section{Metode Kerja}
+\noindent
 Penelitian ini terdiri dari beberapa tahapan, sebagaimana ditunjukkan
 pada Gambar \ref{fig:bagan-umum}. Fokus penelitian ini adalah pada
 perancangan dan pembuatan prototipe sistem deteksi cacat secara otomatis.
@@ -131,15 +134,15 @@ perancangan dan pembuatan prototipe sistem deteksi cacat secara otomatis.
 
 Tahapan awal dimulai dengan kajian literatur mendalam mengenai
 teknologi robotik, algoritma \textit{autoencoder} untuk deteksi anomali
-visual, serta metode deteksi objek seperti YOLO. Kajian ini bertujuan
+visual, serta metode deteksi objek seperti YOLOv12. Kajian ini bertujuan
 untuk memperoleh pemahaman komprehensif terkait format
 \textit{dataset} dan perancangan model deteksi cacat pada kontainer
 kimia. Setelah
 pemahaman awal diperoleh, dilakukan perancangan sistem yang mencakup
 komponen perangkat keras (lengan robot dan sensor) dan perangkat
-lunak berupa algoritma \textit{machine learning}. Selanjutnya sistem
+lunak berupa algoritma \textit{deep learning}. Selanjutnya sistem
 robot dikalibrasi agar dapat bekerja secara optimal, termasuk proses
-\textit{tuning hyperparameter} pada model \textit{machine learning}
+\textit{tuning hyperparameter} pada model \textit{deep learning}
 agar berfungsi secara
 optimal. Setelah sistem dapat beroperasi dengan baik, dilakukan proses
 pengambilan data sebagai langkah awal dalam pengujian dan validasi model.
@@ -147,6 +150,7 @@ pengambilan data sebagai langkah awal dalam pengujian dan validasi model.
 \vspace{1em}
 
 \subsection{Perancangan \textit{Hardware}}
+\noindent
 Penelitian ini dimulai dengan tahap perancangan \textit{hardware}.
 Komponen \textit{hardware} meliputi kamera untuk mengambil citra
 kontainer kimia, laptop sebagai pusat pemrosesan algoritma, dan
@@ -162,7 +166,7 @@ Rangkaian \textit{hardware} dapat dilihat pada Gambar \ref{fig:rangkaian}.
 \vspace{-1em}
 
 Alur kerja sistem dimulai saat kamera menangkap citra kontainer yang
-berada pada area pengambilan gambar. Model YOLO digunakan untuk
+berada pada area pengambilan gambar. Model YOLOv12 digunakan untuk
 mendeteksi objek kontainer. Setelah objek dikenali, citra dikirim ke
 model deteksi kecacatan berbasis \textit{convolutional variational
 autoencoder} (CVAE) untuk menentukan keberadaan cacat. Berdasarkan
@@ -178,7 +182,7 @@ disajikan pada Gambar \ref{fig:hardware}.
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{gambar/rancang.png}
-  \caption{Rancang sistem \textit{hardware}}
+  \caption{Rancangan sistem \textit{hardware}}
   \label{fig:hardware}
 \end{figure}
 \vspace{-1em}
@@ -186,8 +190,9 @@ disajikan pada Gambar \ref{fig:hardware}.
 \vspace{1em}
 
 \subsection{Perancangan \textit{Software}}
+\noindent
 Perangkat lunak dalam penelitian ini mencakup: model deteksi objek
-berbasis YOLO untuk mengidentifikasi kontainer kimia, kedua adalah
+berbasis YOLOv12 untuk mengidentifikasi kontainer kimia, kedua adalah
 model deteksi cacat menggunakan CVAE, ketiga adalah algoritma kontrol
 pergerakan lengan robot, dan yang keempat adalah integrasi modul
 \textit{Internet of Things} (IoT) untuk menampilkan data secara
@@ -196,7 +201,7 @@ pergerakan lengan robot, dan yang keempat adalah integrasi modul
 Proses diawali dengan pengumpulan citra kontainer kimia dari berbagai
 kondisi dan sudut pandang menggunakan kamera. \textit{Dataset} yang
 diperoleh kemudian dianotasi secara manual dengan label dan
-\textit{bounding box} format YOLO. Model dilatih untuk mendeteksi
+\textit{bounding box} format YOLOv12. Model dilatih untuk mendeteksi
 kontainer secara akurat dan cepat. Evaluasi dilakukan menggunakan metrik
 \textit{precision}, \textit{recall}, dan \textit{mean Average
 Precision} (mAP), guna memastikan model memiliki kemampuan
@@ -269,7 +274,7 @@ generalisasi yang baik. Alur proses dapat dilihat pada Gambar
     \draw [arrow] (yolo1.south) -- ($(yolo1.south)+(0,-1.9cm)$) -|
     (model-terlatih);
   \end{tikzpicture}
-  \caption{Diagram alur pelatihan model YOLO}
+  \caption{Diagram alur pelatihan model YOLOv12}
   \label{fig:pipeline-yolo}
 \end{figure}
 \vspace{-1em}
@@ -349,8 +354,9 @@ ditunjukkan pada Gambar \ref{fig:pipeline-autoencoder}.
 \vspace{1em}
 
 \subsection{Bagan Alir Sistem Kerja Alat}
+\noindent
 Alur kerja sistem dimulai dari pengambilan citra oleh kamera,
-pendeteksian kontainer menggunakan YOLO dan klasifikasi kecacatan
+pendeteksian kontainer menggunakan YOLOv12 dan klasifikasi kecacatan
 oleh \textit{autoencoder}. Berdasarkan hasil tersebut, lengan robot
 memindahkan kontainer ke wadah yang sesuai. Data hasil klasifikasi
 dikirim ke \textit{web server} untuk ditampilkan secara
@@ -374,7 +380,7 @@ ditunjukkan pada Gambar \ref{fig:bagan-alir-kerja}.
     ]
     \node (mulai) [startstop] {Mulai};
     \node (kamera) [input, below=of mulai] {Kamera};
-    \node (yolo) [process, below=of kamera] {YOLO};
+    \node (yolo) [process, below=of kamera] {YOLOv12};
     \node (kontainer-terdeteksi) [decision, align=center, below=of yolo]
     {Kontainer \\ Terdeteksi?};
     \node (autoencoder) [process, below=of kontainer-terdeteksi]
